@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from "@chakra-ui/react";
 function Header() {
   return (
     <div style={{ margin: 10 }}>
-      <ButtonGroup spacing="6">
+      {/* <ButtonGroup spacing="6">
         <Button size="lg" colorScheme="blue">
           <Link style={{ marginRight: 20 }} to="/">
             Home
@@ -18,7 +18,7 @@ function Header() {
         <Button size="lg" colorScheme="blue">
           <Link to="/register">Register</Link>
         </Button>
-      </ButtonGroup>
+      </ButtonGroup> */}
     </div>
   );
 }

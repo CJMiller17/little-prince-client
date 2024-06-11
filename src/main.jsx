@@ -6,6 +6,7 @@ import {
   RouterProvider,
   Outlet
 } from 'react-router-dom'
+import { ChakraProvider } from "@chakra-ui/react";
 
 // CSS
 import "./index.css"
@@ -18,16 +19,14 @@ import About from './About.jsx'
 import ErrorPage from './ErrorPage.jsx'
 import Header from './Header.jsx'
 import Footer from './Footer.jsx'
-import { AuthContextProvider, GameContextProvider } from './ContextProvder.jsx'
+import { AuthContextProvider, GameContextProvider } from './ContextProvider.jsx'
+import TestApp from "./LampLighter/LampApp.jsx" 
+import ConceitedApp from './ConceitedMan/ConceitedApp.jsx';
 
 function Layout() {
   return (
     <>
-      <Header />
-      <div>
         <Outlet />
-      </div>
-      <Footer />
     </>
   )
 }
@@ -53,14 +52,24 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: "/lamplighter",
+        element: <TestApp />,
+      },
+      {
+        path: "/conceited",
+        element: <ConceitedApp />,
+      },
     ],
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <AuthContextProvider>
-    <GameContextProvider>
-      <RouterProvider router = { router } />
-    </GameContextProvider>
-  </AuthContextProvider>
-)
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <ChakraProvider>
+    <AuthContextProvider>
+      <GameContextProvider>
+        <RouterProvider router={router} />
+      </GameContextProvider>
+    </AuthContextProvider>
+  </ChakraProvider>
+);
