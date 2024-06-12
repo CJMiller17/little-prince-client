@@ -76,6 +76,10 @@ const Homepage = () => (
     <Button colorScheme="blue" variant="outline" as={Link} to="/drunkard">
       Drunkard
     </Button>
+
+    <Button colorScheme="blue" variant="outline" as={Link} to="/business">
+      Business Man
+    </Button>
   </Container>
 );
 

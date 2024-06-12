@@ -23,6 +23,7 @@ import { AuthContextProvider, GameContextProvider } from './ContextProvider.jsx'
 import TestApp from "./LampLighter/LampApp.jsx" 
 import ConceitedApp from './ConceitedMan/ConceitedApp.jsx';
 import DrunkardApp from './Drunkard/DrunkardApp.jsx';
+import BusinessApp from './BusinessMan/BusinessApp.jsx';
 
 function Layout() {
   return (
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/drunkard",
         element: <DrunkardApp />,
+      },
+      {
+        path: "/business",
+        element: <BusinessApp />,
       },
     ],
   },
