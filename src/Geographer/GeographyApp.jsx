@@ -1,26 +1,28 @@
-// src/App.js
 import React, { useState, useEffect } from "react";
 import PuzzleBoard from "./components/PuzzleBoard";
 import "./Geographer.css";
 
 const App = () => {
-  const [size, setSize] = useState(4); // Default to 4x4
+  const [size, setSize] = useState(3); // Default to 3x3
   const [images, setImages] = useState([]);
 
   const changeDifficulty = (newSize) => {
     setSize(newSize);
     // Load images based on the selected size
-    const imagesPath = `./images/${newSize}x${newSize}`;
+    const imagesPath = `./images/${newSize}x${newSize}/map`;
+    console.log(imagesPath)
     const imagesArray = Array.from(
       { length: newSize * newSize },
       (_, index) => `${imagesPath}/${index + 1}.png`
     );
     setImages(imagesArray);
+    console.log("Images Array: ", imagesArray)
+    console.log("Image?: ", images)
   };
 
-  useEffect(() => {
-    changeDifficulty(size); // Initialize with default size
-  }, []);
+
+
+
 
   const changeImage = () => {
     // Optionally implement image change logic here
