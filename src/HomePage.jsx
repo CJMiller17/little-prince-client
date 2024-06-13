@@ -80,6 +80,10 @@ const Homepage = () => (
     <Button colorScheme="blue" variant="outline" as={Link} to="/business">
       Business Man
     </Button>
+
+    <Button colorScheme="blue" variant="outline" as={Link} to="/geographer">
+      Geographer
+    </Button>
   </Container>
 );
 

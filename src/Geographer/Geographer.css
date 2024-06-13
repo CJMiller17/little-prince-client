@@ -1,0 +1,115 @@
+
+.puzzle-board {
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    height: 600px; 
+    margin: auto;
+    border: 2px solid #000;
+    background: radial-gradient(#3d3d42, #191a1f);
+    box-shadow: 0 10px 10px #0005;
+}
+
+
+.tile {
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    user-select: none;
+    background-size: cover; 
+    background-position: center;
+    transition: background-color 0.3s;
+}
+
+.tile.blank {
+    background-color: transparent;
+    cursor: default;
+}
+
+
+.app {
+    background: radial-gradient(#3d3d42, #191a1f);
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: #eeeeee;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    background-color: #191a21;
+    color: #eee;
+    padding: 10px 20px;
+    font-size: large;
+    letter-spacing: 5px;
+    box-shadow: 0 10px 10px #0005;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+
+
+/* src/components/PuzzleBoard.css 
+.puzzle-board {
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    border: 2px solid #000;
+}
+
+ src/components/Tile.css 
+.tile {
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    user-select: none;
+}
+
+.tile.blank {
+    background-color: transparent;
+    cursor: default;
+}
+
+src/App.css
+.app {
+    text-align: center;
+    padding: 20px;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+*/
