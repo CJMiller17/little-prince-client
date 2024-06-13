@@ -29,6 +29,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const Form1 = () => {
   const [show, setShow] = useState(false);
+  
   const handleClick = () => setShow(!show);
   return (
     <>
@@ -44,7 +45,9 @@ const Form1 = () => {
           <FormLabel htmlFor="sound" fontWeight={"normal"}>
             What's your favorite sound?
           </FormLabel>
-          <Input id="sound" placeholder="ex. Splashing, giggling, etc..." />
+          <Input
+            id="sound"
+            placeholder="ex. Splashing, giggling, etc..." />
         </FormControl>
 
         <FormControl ml="5%">
