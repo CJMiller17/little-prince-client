@@ -33,6 +33,8 @@ const PuzzleBoard = ({ size, images }) => {
     }
   };
 
+console.log("IMAGES IN PUZZLEBOARD", images)
+
   // Magical Math
   const isAdjacent = (index) => {
     const row = Math.floor(index / size);

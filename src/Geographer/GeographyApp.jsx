@@ -9,7 +9,7 @@ const App = () => {
   const changeDifficulty = (newSize) => {
     setSize(newSize);
     // Load images based on the selected size
-    const imagesPath = `./images/${newSize}x${newSize}/map`;
+    const imagesPath = `src/Geographer/images/${newSize}x${newSize}/map`;
     console.log(imagesPath)
     const imagesArray = Array.from(
       { length: newSize * newSize },
@@ -20,8 +20,9 @@ const App = () => {
     console.log("Image?: ", images)
   };
 
-
-
+  useEffect(() => {
+    changeDifficulty(size)
+},[])
 
 
   const changeImage = () => {

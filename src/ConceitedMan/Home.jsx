@@ -4,10 +4,9 @@ const Home = ({ onGame }) => {
   return (
     
     <div className="home">
-        <div className="title">TYPING GAME</div>
+        <div className="title">The Conceited Man</div>
         <div className="author">
-            Coding & <br />
-            Design by Cody Codes
+            Asteroid 326
         </div>
         <button onClick={() => onGame("playGame")} className="btnPlay">
             Play Game
