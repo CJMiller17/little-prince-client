@@ -1,6 +1,6 @@
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
-import flameImage from "../assets/flame.png";
+import flameImage from "../public/assets/flame.png";
 
 export default function LampPost({ index, flame }) {
   return (

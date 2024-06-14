@@ -1,6 +1,7 @@
 import React from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import flameImage from "../assets/flame.png";
+
+import flameImage from '../public/assets/flame.png'
 
 export default function Inventory({ flames }) {
   return (

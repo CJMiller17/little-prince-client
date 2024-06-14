@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PuzzleBoard from "./components/PuzzleBoard";
 import "./Geographer.css";
 
+
+
 const App = () => {
   const [size, setSize] = useState(3); // Default to 3x3
   const [images, setImages] = useState([]);
@@ -9,7 +11,11 @@ const App = () => {
   const changeDifficulty = (newSize) => {
     setSize(newSize);
     // Load images based on the selected size
+<<<<<<< Updated upstream
     const imagesPath = `src/Geographer/images/${newSize}x${newSize}/map`;
+=======
+    const imagesPath = `/assets/images/${newSize}x${newSize}/map`;
+>>>>>>> Stashed changes
     console.log(imagesPath)
     const imagesArray = Array.from(
       { length: newSize * newSize },

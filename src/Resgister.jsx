@@ -47,7 +47,9 @@ const Form1 = () => {
           </FormLabel>
           <Input
             id="sound"
-            placeholder="ex. Splashing, giggling, etc..." />
+            placeholder="ex. Splashing, giggling, etc..."
+            onChange={}
+          />
         </FormControl>
 
         <FormControl ml="5%">
