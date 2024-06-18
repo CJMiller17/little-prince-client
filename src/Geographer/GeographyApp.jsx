@@ -11,11 +11,7 @@ const App = () => {
   const changeDifficulty = (newSize) => {
     setSize(newSize);
     // Load images based on the selected size
-<<<<<<< HEAD
-    const imagesPath = `src/public/images/${newSize}x${newSize}/map`;
-=======
     const imagesPath = `/assets/images/${newSize}x${newSize}/map`;
->>>>>>> dev
     console.log(imagesPath)
     const imagesArray = Array.from(
       { length: newSize * newSize },
