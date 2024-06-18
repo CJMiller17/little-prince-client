@@ -31,8 +31,8 @@ const Homepage = () => (
         py={{ base: "0", sm: "8" }}
         px={{ base: "4", sm: "10" }}
         bg={{ base: "transparent", sm: "white" }}
-        boxShadow={{ base: "none", sm: "md" }}
-        borderRadius={{ base: "none", sm: "xl" }}
+        boxShadow="dark-lg"
+        borderRadius="xl"
       >
         <Stack spacing="6">
           <Heading size={{ base: "xs", md: "sm" }}>
@@ -65,25 +65,7 @@ const Homepage = () => (
       </Box>
     </Stack>
 
-    <Button colorScheme="blue" variant="outline" as={Link} to="/lamplighter">
-      LampLighter
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/conceited">
-      Conceited Man
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/drunkard">
-      Drunkard
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/business">
-      Business Man
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/geographer">
-      Geographer
-    </Button>
+    
   </Container>
 );
 

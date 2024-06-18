@@ -20,24 +20,17 @@ export const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
     const currentToken = JSON.parse(localStorage.getItem("accessToken"))
-    // const currentRefreshToken = JSON.parse(localStorage.getItem("refreshToken"))
-    
-    const [accessToken, setAccessToken] = useState(currentToken || [])
-    // const [refreshToken, setRefreshToken] = useState(currentRefreshToken || [])
+    const [accessToken, setAccessToken] = useState(currentToken || null)
+
 
     useEffect(() => {
+        // console.log("THE TOKEN BE THIS TOKEN (NOT JRR): ", accessToken)
         localStorage.setItem("accessToken", JSON.stringify(accessToken))
     }, [accessToken])
-
-    // useEffect(() => {
-    //     localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
-    // }, [refreshToken]);
 
     const auth = {
       accessToken,
       setAccessToken,
-      // refreshToken,
-      // setRefreshToken,
     };
 
     return (

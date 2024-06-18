@@ -25,6 +25,8 @@ import ConceitedApp from './ConceitedMan/ConceitedApp.jsx';
 import DrunkardApp from './Drunkard/DrunkardApp.jsx';
 // import BusinessApp from './BusinessMan/BusinessApp.jsx';
 import GeographerApp from './Geographer/GeographyApp.jsx';
+import ProfilePage from './ProfilePage.jsx'
+import GamePage from './GamePage.jsx';
 
 function Layout() {
   return (
@@ -75,12 +77,21 @@ const router = createBrowserRouter([
         path: "/geographer",
         element: <GeographerApp />,
       },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/gamepage",
+        element: <GamePage />,
+      },
     ],
   },
 ]);
 
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ChakraProvider>
+  <ChakraProvider resetCSS={false}>
     <AuthContextProvider>
       <GameContextProvider>
         <RouterProvider router={router} />
