@@ -20,13 +20,13 @@ const GamePage = () => {
 
 
     const handleSubmit = () => {
-        const retrievedToken = localStorage.getItem("accessToken")
-        console.log("retrieved Token: ", retrievedToken)
-    getCurrentUserProfile(retrievedToken)
-      .then((data) => {
-        console.log("Data: ", data);
+        // const retrievedToken = localStorage.getItem("accessToken")
+    console.log("HANDLE SUBMIT Token: ", auth.accessToken)
+    getCurrentUserProfile(auth.accessToken)
+      .then((response) => {
+        console.log("Data: ", response.data);
         // auth.setAccessToken(data.access);
-        // navigate("/profile");
+        navigate("/profile");
       })
       .catch((error) => {
         console.log("Error Logging In: ", error);

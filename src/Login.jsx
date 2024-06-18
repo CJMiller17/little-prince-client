@@ -18,8 +18,11 @@ import {
   useMergeRefs,
   SimpleGrid,
   useConst,
+  ButtonGroup,
+  Flex,
+  Spacer,
 } from "@chakra-ui/react";
-import { forwardRef, useContext, useRef, useState } from "react"
+import { forwardRef, useContext, useRef, useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { HiEye, HiEyeOff } from "react-icons/hi"
 import { IoHome } from "react-icons/io5"
@@ -33,13 +36,22 @@ const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("");
 
+  // useEffect(() => {
+  //   // Prevent scrolling
+  //   document.body.style.overflow = "hidden";
+
+  //   // Cleanup function to reset the overflow property
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, []);
+
   const submit = () => {
     getToken({ username, password })
-      .then((data) => {
-        console.log("Does this match Token Response.data?: ", data);
-        auth.setAccessToken(data.access);
+      .then((response) => {
+        console.log("Does this match Token Response?: ", response);
+        auth.setAccessToken(response.data.access);
         console.log("Auth.setAccessToken: ", auth.accessToken) //This is always from the previous render.
-        
       })
       .then(() => {
         navigate("/gamepage");
@@ -53,7 +65,7 @@ const Login = () => {
   return (
     <Container
       maxW="lg"
-      py={{ base: "12", md: "24" }}
+      py={{ base: "12", md: "12" }}
       px={{ base: "0", sm: "8" }}
     >
       <Stack
@@ -66,12 +78,25 @@ const Login = () => {
       >
         <Stack spacing="6">
           <Stack spacing={{ base: "0", md: "1" }} textAlign="center">
-            <Heading >
+            <Heading fontFamily="Lobster Two" color="#3C6286">
               Log in to your account
             </Heading>
-            <Text color="gray.400" fontSize="xs">
+            <Text color="gray.400" fontSize="sm">
               Don't have an account?
-              <Button bgColor="blue" variant="link" size="md" fontSize=".6rem" letterSpacing=".01rem">
+              <Button
+                ml=".5rem"
+                color="white"
+                bgColor="#82B0E1"
+                variant="link"
+                size="md"
+                fontSize=".7rem"
+                letterSpacing=".001rem"
+                _hover={{ bgColor: "gray" }}
+                _active={{ color: "#F0BF73" }}
+                as={Link}
+                to="/register"
+                textDecoration="none"
+              >
                 Sign up
               </Button>
             </Text>
@@ -84,39 +109,71 @@ const Login = () => {
           boxShadow="inner"
           borderRadius="xl"
         >
-          <Stack spacing="6">
-            <Stack spacing="5">
+          <Stack spacing="1">
+            <Stack spacing="1">
               <FormControl>
-                <FormLabel htmlFor="username">Username</FormLabel>
+                <FormLabel
+                  htmlFor="username"
+                  color="#3C6286"
+                  fontSize="1.5rem"
+                  fontWeight="500"
+                >
+                  Username
+                </FormLabel>
                 <Input
+                  mt="-1rem"
                   id="Username"
+                  focusBorderColor="#6C6381"
+                  borderRadius="xl"
                   type="text"
-                  color="blue"
+                  color="#82B0E1"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  size="xl"
                 />
               </FormControl>
               <PasswordField password={password} setPassword={setPassword} />
             </Stack>
-            <HStack justify="space-between">
-              <Checkbox defaultChecked>Remember me</Checkbox>
-              <Button variant="link" size="sm">
+            <Flex>
+              <Checkbox defaultChecked color="#3C6286" colorScheme="customBlue">
+                Remember me
+              </Checkbox>
+              <Spacer />
+              <Button
+                variant="link"
+                p=".3rem"
+                fontSize=".6rem"
+                bg="#82B0E1"
+                _hover={{ bgColor: "gray" }}
+                _active={{ color: "#F0BF73" }}
+                color="white"
+                letterSpacing=".01rem"
+                justifyItems="right"
+              >
                 Forgot password?
               </Button>
-            </HStack>
-            <SimpleGrid columns={2} spacing="0">
-              <Button colorScheme="blue" width="50%" onClick={submit}>
+            </Flex>
+            <ButtonGroup>
+              <Button
+                colorScheme="customDarkBlue"
+                width="50%"
+                onClick={submit}
+                _hover={{ bgColor: "gray" }}
+                _active={{ color: "#F0BF73" }}
+              >
                 Sign in
               </Button>
               <IconButton
-                colorScheme="blue"
+                alignSelf="center"
+                colorScheme="customDarkBlue"
+                _hover={{ bgColor: "gray" }}
+                _active={{ color: "#F0BF73" }}
                 aria-label="home button"
                 icon={<IoHome />}
                 as={Link}
                 to="/"
-                width="10"
               />
-            </SimpleGrid>
+            </ButtonGroup>
           </Stack>
         </Box>
       </Stack>
@@ -140,20 +197,34 @@ export const PasswordField = forwardRef(({ password, setPassword, ...props}, ref
 
   return (
     <FormControl>
-      <FormLabel htmlFor="password">Password</FormLabel>
-      <InputGroup>
+      <FormLabel
+        htmlFor="password"
+        color="#3C6286"
+        fontSize="1.5rem"
+        fontWeight="500"
+      >
+        Password
+      </FormLabel>
+      <InputGroup size="xl">
         <InputRightElement>
           <IconButton
             variant="link"
+            color="#82B0E1"
             aria-label={isOpen ? "Mask password" : "Reveal password"}
+            bg="none"
+            boxShadow="none"
             icon={isOpen ? <HiEyeOff /> : <HiEye />}
             onClick={onClickReveal}
+            _hover={{ color: "gray", bg: "none" }}
           />
         </InputRightElement>
         <Input
+          mt="-1"
           id="password"
           ref={mergeRef}
-          color="blue"
+          borderRadius="xl"
+          focusBorderColor="#6C6381"
+          color="#82B0E1"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

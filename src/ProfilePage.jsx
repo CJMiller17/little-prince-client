@@ -34,15 +34,15 @@ export default function ProfilePage({ username, name, avatar }) {
 
     console.log("Props Now?: ", username, name, avatar);
 
-    useEffect(() => {
-      getCurrentUserProfile(auth.accessToken)
-        .then((data) => {
-          setProfile(data);
-        })
-        .catch((error) => {
-          console.log("Error fetching profile: ", error);
-        });
-    }, [auth.accessToken]);
+    // useEffect(() => {
+    //   getCurrentUserProfile(auth.accessToken)
+    //     .then((response) => {
+    //       setProfile(response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.log("Error fetching profile: ", error);
+    //     });
+    // }, [auth.accessToken]);
 
   return (
     <Center py={6}>

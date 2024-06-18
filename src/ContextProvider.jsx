@@ -22,7 +22,6 @@ export const AuthContextProvider = ({ children }) => {
     const currentToken = JSON.parse(localStorage.getItem("accessToken"))
     const [accessToken, setAccessToken] = useState(currentToken || null)
 
-
     useEffect(() => {
         // console.log("THE TOKEN BE THIS TOKEN (NOT JRR): ", accessToken)
         localStorage.setItem("accessToken", JSON.stringify(accessToken))

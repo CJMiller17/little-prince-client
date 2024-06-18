@@ -2,34 +2,24 @@ import axios from "axios";
 import { AuthContext } from "./ContextProvider";
 import React, {useContext} from "react";
 
-const baseURL = "http://127.0.0.1:8000";
 // const baseURL = "http://127.0.0.1:8000";
+// const baseURL = "http://127.0.0.1:8000";
+const baseURL = import.meta.env.VITE_BASE_URL
+console.log("baseURL:", baseURL)
 
 
 // GET TOKEN
 export const getToken = ({ username, password }) => {
   console.log("username: ", username);
   console.log("password: ", password);
-  return axios
-    .post(
-      `${baseURL}/token/`,
-      {
-        username: username,
-        password: password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    .then((response) => {
-      console.log("Token response: ", response);
-      return response.data
-    })
-    .catch((error) => {
-      console.log("Token Error: ", error);
-    });
+  return axios({
+    method: 'post',
+    url: `${baseURL}/token/`,
+    data: {
+      username: username,
+      password: password,
+    }
+  })
 };
 
 
@@ -81,20 +71,13 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
 
 export const getCurrentUserProfile = (retrievedToken) => {
   console.log("API retrieved Token: ", retrievedToken)
-  return axios
-    .get(`${baseURL}/profiles/me/`, {
-      headers: {
-        Authorization: `Bearer ${retrievedToken}`,
-      },
-    })
-    .then((response) => {
-      console.log("User Response: ", response)
-      console.log("User Data: ", response.data);
-      return response.data
-    })
-    .catch((error) => {
-      console.log("Get Error: ", error);
-    });
+  return axios({
+    method: "get",
+    url: `${baseURL}/profiles/me/`,
+    headers: {
+      Authorization: `Bearer ${retrievedToken}`,
+    }
+  })
 };
 
 // export const getCurrentUserProfile = async ({ auth }) => {

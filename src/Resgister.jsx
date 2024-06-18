@@ -179,7 +179,13 @@ const Form1 = ({ formData, handleInputChange }) => {
   
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
+      <Heading
+        fontFamily="Lobster Two"
+        w="100%"
+        textAlign={"center"}
+        fontWeight="normal"
+        mb="2%"
+      >
         You must be new!
       </Heading>
       <Text textAlign="center" fontSize={"small"} mb="10">
@@ -215,8 +221,8 @@ const Form1 = ({ formData, handleInputChange }) => {
             onChange={handleInputChange}
             value={formData.butterflies}
           >
-            <option value="true" >Yes I do!</option>
-            <option value="false" >No, not really...</option>
+            <option value="true">Yes I do!</option>
+            <option value="false">No, not really...</option>
           </Select>
         </FormControl>
       </Flex>
@@ -231,8 +237,14 @@ const Form1 = ({ formData, handleInputChange }) => {
 const Form2 = ({formData, handleInputChange}) => {
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
-        To see with our hearts
+      <Heading
+        fontFamily="Lobster Two"
+        w="100%"
+        textAlign={"center"}
+        fontWeight="normal"
+        mb="2%"
+      >
+        To see with our hearts...
       </Heading>
 
       <SimpleGrid columns={2} spacing={5} mb="3%">
@@ -306,7 +318,12 @@ const Form3 = ({formData, handleInputChange}) => {
   
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal">
+      <Heading
+        fontFamily="Lobster Two"
+        w="100%"
+        textAlign={"center"}
+        fontWeight="normal"
+      >
         What is essential...
       </Heading>
       <SimpleGrid columns={1} spacing={6}>
