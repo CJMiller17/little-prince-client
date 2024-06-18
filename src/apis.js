@@ -1,33 +1,25 @@
 import axios from "axios";
+import { AuthContext } from "./ContextProvider";
+import React, {useContext} from "react";
 
-const baseURL = "http://127.0.0.1:8000";
 // const baseURL = "http://127.0.0.1:8000";
+// const baseURL = "http://127.0.0.1:8000";
+const baseURL = import.meta.env.VITE_BASE_URL
+console.log("baseURL:", baseURL)
 
 
 // GET TOKEN
-export const getToken = ({ accessToken, setAccessToken, username, password }) => {
+export const getToken = ({ username, password }) => {
   console.log("username: ", username);
   console.log("password: ", password);
-  axios
-    .post(
-      `${baseURL}/token/`,
-      {
-        username: username,
-        password: password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    .then((response) => {
-      console.log("response: ", response);
-      setAccessToken(response.data.access);
-    })
-    .catch((error) => {
-      console.log("Error: ", error);
-    });
+  return axios({
+    method: 'post',
+    url: `${baseURL}/token/`,
+    data: {
+      username: username,
+      password: password,
+    }
+  })
 };
 
 
@@ -35,7 +27,7 @@ export const getToken = ({ accessToken, setAccessToken, username, password }) =>
 export const createUser = ({ username, password, name, avatar, butterflies, elephants, games, color, birds, scorePrince, scoreKing, scoreConceited, scoreDrunkard, scoreBusiness, scoreLamplighter, scoreGeographer, scoreEarth, scoreTotal, item1, item2, item3 }) => {
   axios
     .post(
-      `${baseURL}/profile/create/`,
+      `${baseURL}/profiles/create/`,
       {
         username,
         password,
@@ -76,20 +68,36 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
 
 
 // RETRIEVE
-export const getCurrentUserProfile = ({ accessToken, setProfile }) => {
-  axios
-    .get(`${baseURL}/profiles/me/`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((response) => {
-      setProfile(response.data);
-    })
-    .catch((error) => {
-      console.log("Error fetching current user profile: ", error);
-    });
+
+export const getCurrentUserProfile = (retrievedToken) => {
+  console.log("API retrieved Token: ", retrievedToken)
+  return axios({
+    method: "get",
+    url: `${baseURL}/profiles/me/`,
+    headers: {
+      Authorization: `Bearer ${retrievedToken}`,
+    }
+  })
 };
+
+// export const getCurrentUserProfile = async ({ auth }) => {
+//   console.log("YEP: ", auth.accessToken)
+//   try {
+//     const response = await axios({
+//       method: 'get',
+//       url: `${baseURL}/profiles/me/`,
+//       headers: {
+//         "Authorization": `Bearer ${auth.accessToken}`
+//       },
+//     })
+//     console.log(response)
+
+//     return response.data;
+//   } catch (error) {
+//     console.log("Error fetching current user profile: ", error);
+//   }
+// };
+
 
 
 // UPDATE
@@ -143,7 +151,7 @@ export const updateUser = ({
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${auth.accessToken}`,
         },
       }
     )
@@ -158,15 +166,16 @@ export const updateUser = ({
 
 
 // DELETE
-export const deleteUser = ({ accessToken, userId }) => {
-  axios
+export const deleteUser = (auth, userId) => {
+  return axios
     .delete(`${baseURL}/profiles/${userId}/delete/`, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${auth.accessToken}`,
       },
     })
     .then((response) => {
-      console.log("User Deleted");
+      console.log("User Deleted: ", response)
+      return response
     })
     .catch((error) => {
       console.log("Deletion Error: ", error);

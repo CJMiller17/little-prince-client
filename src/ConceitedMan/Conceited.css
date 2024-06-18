@@ -44,7 +44,7 @@
 .playing {
     height: 100vh;
     display: grid;
-    grid-template-rows: 70% 1fr;
+    grid-template-rows: 20% 1fr;
     padding: 50px;
     text-align: center;
     gap: 10px;
@@ -133,4 +133,8 @@
 .endGame .number {
     font-size: 50px;
 
+}
+
+.difficulty-selector {
+    margin: auto;
 }

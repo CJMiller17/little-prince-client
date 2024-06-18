@@ -31,59 +31,34 @@ const Homepage = () => (
         py={{ base: "0", sm: "8" }}
         px={{ base: "4", sm: "10" }}
         bg={{ base: "transparent", sm: "white" }}
-        boxShadow={{ base: "none", sm: "md" }}
-        borderRadius={{ base: "none", sm: "xl" }}
+        boxShadow="dark-lg"
+        borderRadius="xl"
       >
         <Stack spacing="6">
-          <Heading size={{ base: "xs", md: "sm" }}>
+          <Heading fontFamily="Lobster Two" color="#3C6286">
             The Little Prince Game
           </Heading>
-          <Text color="gray.500">
-            The Little Prince returns and is looking for Antoine. Help him find
-            the pilot as he recounts his adventures.
+          <Text color="gray.400">
+            The Little Prince has come back and is looking for Antoine. Help him
+            find the pilot as he recounts his adventures.
           </Text>
 
-          <ButtonGroup spacing="6">
-            <Button colorScheme="blue" variant="solid" as={Link} to="/login">
+          <ButtonGroup spacing="6" colorScheme="customDarkBlue">
+            <Button variant="solid" as={Link} to="/login">
               Returning?
             </Button>
 
-            <Button
-              colorScheme="blue"
-              variant="outline"
-              as={Link}
-              to="/register"
-            >
+            <Button color="#3C6286" variant="outline" as={Link} to="/register">
               New?
             </Button>
 
-            <Button colorScheme="blue" variant="outline" as={Link} to="/about">
+            <Button color="#3C6286" variant="outline" as={Link} to="/about">
               About
             </Button>
           </ButtonGroup>
         </Stack>
       </Box>
     </Stack>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/lamplighter">
-      LampLighter
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/conceited">
-      Conceited Man
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/drunkard">
-      Drunkard
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/business">
-      Business Man
-    </Button>
-
-    <Button colorScheme="blue" variant="outline" as={Link} to="/geographer">
-      Geographer
-    </Button>
   </Container>
 );
 

@@ -3,8 +3,9 @@ import { DragDropContext } from "react-beautiful-dnd";
 import Inventory from "./Inventory";
 import PlanetGameBoard from "./PlanetLampLighter";
 import "./Lamp.css";
+import { Heading } from "@chakra-ui/react";
 
-function TestApp() {
+function LampApp() {
   const [flames, setFlames] = useState([
     "flame1",
     "flame2",
@@ -40,7 +41,7 @@ function TestApp() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
-        <h1>Lamp Lighter Game</h1>
+        <Heading fontFamily="Lobster Two">Lamp Lighter Game</Heading>
         <div className="game-container">
           <Inventory flames={flames} />
           <PlanetGameBoard lampposts={lampposts} />
@@ -50,4 +51,4 @@ function TestApp() {
   );
 }
 
-export default TestApp;
+export default LampApp;
