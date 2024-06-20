@@ -5,7 +5,7 @@
 }
 
 .App {
-    background: radial-gradient(#3d3d42, #191a1f);
+    background: radial-gradient(#82B0E1, #3C6286);
     height: 100vh;
     font-family: Poppins;
     color: #eeee;
@@ -19,7 +19,7 @@
     text-shadow: 0 10px 10px #000;
 }
 
-.btnPlay {
+/* .btnPlay {
     display: block;
     margin: 20px auto;
     background-color: #191a21;
@@ -28,7 +28,7 @@
     font-size: large;
     letter-spacing: 5px;
     box-shadow: 0 10px 10px #0005;
-}
+} */
 
 @keyframes showHome {
     to{
