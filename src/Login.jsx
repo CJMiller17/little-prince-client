@@ -36,15 +36,6 @@ const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   // Prevent scrolling
-  //   document.body.style.overflow = "hidden";
-
-  //   // Cleanup function to reset the overflow property
-  //   return () => {
-  //     document.body.style.overflow = "auto";
-  //   };
-  // }, []);
 
   const submit = () => {
     getToken({ username, password })
@@ -63,11 +54,7 @@ const Login = () => {
   
 
   return (
-    <Container
-      maxW="lg"
-      py={{ base: "12", md: "12" }}
-      px={{ base: "0", sm: "8" }}
-    >
+    <Container maxW="2xl" py={{ base: "20" }} px={{ base: "0", sm: "8" }}>
       <Stack
         spacing="1"
         py={{ base: "0", sm: "8" }}
@@ -88,11 +75,12 @@ const Login = () => {
                 color="white"
                 bgColor="#82B0E1"
                 variant="link"
+                boxShadow="0 4px 4px #0005"
                 size="md"
                 fontSize=".7rem"
                 letterSpacing=".001rem"
                 _hover={{ bgColor: "gray" }}
-                _active={{ color: "#F0BF73" }}
+                _active={{ color: "#FBD154" }}
                 as={Link}
                 to="/register"
                 textDecoration="none"
@@ -116,19 +104,19 @@ const Login = () => {
                   htmlFor="username"
                   color="#3C6286"
                   fontSize="1.5rem"
-                  fontWeight="500"
+                  fontWeight="xl"
                 >
                   Username
                 </FormLabel>
                 <Input
                   mt="-1rem"
                   id="Username"
-                  focusBorderColor="#6C6381"
-                  borderRadius="xl"
                   type="text"
-                  color="#82B0E1"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  color="#82B0E1"
+                  focusBorderColor="#6C6381"
+                  borderRadius="xl"
                   size="xl"
                 />
               </FormControl>
@@ -145,7 +133,7 @@ const Login = () => {
                 fontSize=".6rem"
                 bg="#82B0E1"
                 _hover={{ bgColor: "gray" }}
-                _active={{ color: "#F0BF73" }}
+                _active={{ color: "#FBD154" }}
                 color="white"
                 letterSpacing=".01rem"
                 justifyItems="right"
@@ -159,7 +147,8 @@ const Login = () => {
                 width="50%"
                 onClick={submit}
                 _hover={{ bgColor: "gray" }}
-                _active={{ color: "#F0BF73" }}
+                _active={{ color: "#FBD154" }}
+                boxShadow="0 10px 10px #0005"
               >
                 Sign in
               </Button>
@@ -167,11 +156,12 @@ const Login = () => {
                 alignSelf="center"
                 colorScheme="customDarkBlue"
                 _hover={{ bgColor: "gray" }}
-                _active={{ color: "#F0BF73" }}
+                _active={{ color: "#FBD154" }}
                 aria-label="home button"
                 icon={<IoHome />}
                 as={Link}
                 to="/"
+                boxShadow="0 10px 10px #0005"
               />
             </ButtonGroup>
           </Stack>
@@ -201,7 +191,7 @@ export const PasswordField = forwardRef(({ password, setPassword, ...props}, ref
         htmlFor="password"
         color="#3C6286"
         fontSize="1.5rem"
-        fontWeight="500"
+        fontWeight="xl"
       >
         Password
       </FormLabel>

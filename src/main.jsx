@@ -42,7 +42,7 @@ const customTheme = extendTheme({
     customBlue: {500: "#82B0E1"},
     customLightBlue: {500: "#B8D4E6"},
     customOrange: {500: "#C7834A"},
-    customRedish: {500: "#C67E63"},
+    customRed: {500: "#C67E63"},
     customMaroon: {500: "#A3646D"},
     customYellow: {500: "#F0BF73"},
     customPurple: {500: "#6C6381"},

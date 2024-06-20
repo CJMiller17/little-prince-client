@@ -21,6 +21,7 @@ export const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => {
     const currentToken = JSON.parse(localStorage.getItem("accessToken"))
     const [accessToken, setAccessToken] = useState(currentToken || null)
+    const [profileData, setProfileData] = useState(null)
 
     useEffect(() => {
         // console.log("THE TOKEN BE THIS TOKEN (NOT JRR): ", accessToken)
@@ -32,8 +33,13 @@ export const AuthContextProvider = ({ children }) => {
       setAccessToken,
     };
 
+    const profile = {
+        profileData,
+        setProfileData,
+    }
+
     return (
-        <AuthContext.Provider value={{ auth }}>
+        <AuthContext.Provider value={{ auth, profile }}>
             {children}
         </AuthContext.Provider>
     )
