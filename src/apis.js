@@ -4,7 +4,7 @@ import React, {useContext} from "react";
 
 // const baseURL = "http://127.0.0.1:8000";
 // const baseURL = "http://127.0.0.1:8000";
-const baseURL = import.meta.env.VITE_BASE_URL
+export const baseURL = import.meta.env.VITE_BASE_URL
 console.log("baseURL:", baseURL)
 
 
@@ -49,11 +49,11 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
         total_score: scoreTotal,
         item_1: item1,
         item_2: item2,
-        item_3: item3
+        item_3: item3,
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       }
     )
@@ -79,24 +79,6 @@ export const getCurrentUserProfile = (retrievedToken) => {
     }
   })
 };
-
-// export const getCurrentUserProfile = async ({ auth }) => {
-//   console.log("YEP: ", auth.accessToken)
-//   try {
-//     const response = await axios({
-//       method: 'get',
-//       url: `${baseURL}/profiles/me/`,
-//       headers: {
-//         "Authorization": `Bearer ${auth.accessToken}`
-//       },
-//     })
-//     console.log(response)
-
-//     return response.data;
-//   } catch (error) {
-//     console.log("Error fetching current user profile: ", error);
-//   }
-// };
 
 
 

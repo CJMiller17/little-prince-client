@@ -36,15 +36,6 @@ const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   // Prevent scrolling
-  //   document.body.style.overflow = "hidden";
-
-  //   // Cleanup function to reset the overflow property
-  //   return () => {
-  //     document.body.style.overflow = "auto";
-  //   };
-  // }, []);
 
   const submit = () => {
     getToken({ username, password })
@@ -120,12 +111,12 @@ const Login = () => {
                 <Input
                   mt="-1rem"
                   id="Username"
-                  focusBorderColor="#6C6381"
-                  borderRadius="xl"
                   type="text"
-                  color="#82B0E1"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  color="#82B0E1"
+                  focusBorderColor="#6C6381"
+                  borderRadius="xl"
                   size="xl"
                 />
               </FormControl>

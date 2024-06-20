@@ -5,60 +5,54 @@ import {
   Center,
   Text,
   Stack,
-  Button,
+  IconButton,
   Badge,
   useColorModeValue,
+  ButtonGroup
 } from "@chakra-ui/react";
+import { ArrowBackIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUserProfile, deleteUser } from "./apis";
 import { AuthContext } from "./ContextProvider";
+import { baseURL } from "./apis";
 
 export default function ProfilePage({ username, name, avatar }) {
-    const [profile, setProfile] = useState(null)
-    const { auth } = useContext(AuthContext);
+    const { auth, profile } = useContext(AuthContext);
     const navigate = useNavigate()
-    
-    console.log("Props?: ", auth.accessToken)
-
+  
+    console.log("Profile: ", profile)
+    console.log("BaseURL: ", baseURL);
+  
     const handleDelete = () => {
-        deleteUser(auth, profile.id)
+      console.log("Auth: ", auth, "Profile.id: ", profile)
+          deleteUser(auth, profile.profileData.profileData.id)
             .then(() => {
-                console.log("User profile deleted")
-                navigate("/")
+              navigate("/");
             })
             .catch((error) => {
-            console.log("Deletion error: ", error)
-        })
-    }
+              console.log("Deletion error: ", error);
+            });
+      }
 
-    console.log("Props Now?: ", username, name, avatar);
-
-    // useEffect(() => {
-    //   getCurrentUserProfile(auth.accessToken)
-    //     .then((response) => {
-    //       setProfile(response.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log("Error fetching profile: ", error);
-    //     });
-    // }, [auth.accessToken]);
+  
+  const profileImage = baseURL + profile.profileData.profileData.profile_image;
+  console.log("ProfileImage Path: ", profileImage)
 
   return (
-    <Center py={6}>
+    <Center py={{ base: "20" }} px={{ base: "0", sm: "8" }}>
       <Box
-        maxW={"320px"}
-        w={"full"}
-        bg={useColorModeValue("white", "gray.900")}
-        boxShadow={"2xl"}
+        width={"320px"}
+        boxShadow="dark-lg"
+        borderRadius="xl"
         rounded={"lg"}
-        p={6}
         textAlign={"center"}
+        py={{ base: "5" }}
       >
         <Avatar
-          size={"xl"}
-          src={avatar}
-          mb={4}
+          size={"2xl"}
+          src={profileImage}
+          mb={3}
           pos={"relative"}
           _after={{
             content: '""',
@@ -72,96 +66,119 @@ export default function ProfilePage({ username, name, avatar }) {
             right: 3,
           }}
         />
-        <Heading fontSize={"2xl"} fontFamily={"body"}>
-          {name}
+        <Heading fontSize={"4xl"} fontFamily="Lobster Two" color="#3C6286">
+          {profile.profileData.profileData.name}
         </Heading>
-        <Text fontWeight={600} color={"gray.500"} mb={4}>
-          @{username}
+        <Text fontWeight={600} color={"gray.500"} mb={3} fontSize="sm">
+          @{profile.profileData.profileData.account_name.username}
         </Text>
         <Text
           textAlign={"center"}
-          color={useColorModeValue("gray.700", "gray.400")}
-          px={3}
+          color="#82B0E1"
+          textDecoration="underline"
+          fontSize={"1.5rem"}
+          fontWeight={"xl"}
+          mb={1}
         >
-          Scores: Birds: Rare Items:
+          Scores:
         </Text>
 
-        <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
+        <Stack align={"center"} justify={"center"} direction={"column"} mb={6}>
           <Badge
             px={2}
             py={1}
-            bg={useColorModeValue("gray.50", "gray.800")}
-            fontWeight={"400"}
+            color="#3C6286"
+            minW="6.5rem"
+            textAlign="left"
+            bg={useColorModeValue("gray.100", "gray.800")}
+            fontWeight={"xl"}
+            fontSize="1rem"
           >
-            #NewPlayer
+            Asteroid 326: {profile.profileData.profileData.score_conceited_man}
           </Badge>
           <Badge
             px={2}
             py={1}
-            bg={useColorModeValue("gray.50", "gray.800")}
-            fontWeight={"400"}
+            color="#3C6286"
+            minW="6.5rem"
+            textAlign="left"
+            bg={useColorModeValue("gray.100", "gray.800")}
+            fontWeight={"xl"}
+            fontSize="1rem"
           >
-            #Unlocked 3 Planets
+            Asteroid 327: {profile.profileData.profileData.score_drunkard}
           </Badge>
           <Badge
             px={2}
             py={1}
-            bg={useColorModeValue("gray.50", "gray.800")}
-            fontWeight={"400"}
+            color="#3C6286"
+            minW="6.5rem"
+            textAlign="left"
+            bg={useColorModeValue("gray.100", "gray.800")}
+            fontWeight={"xl"}
+            fontSize="1rem"
           >
-            #BirdCollector
+            Asteroid 330: {profile.profileData.profileData.score_geographer}
+          </Badge>
+          <Badge
+            px={2}
+            py={1}
+            color="#3C6286"
+            minW="6.5rem"
+            textAlign="left"
+            bg={useColorModeValue("gray.300", "gray.800")}
+            fontWeight={"xl"}
+            fontSize="1rem"
+          >
+            Total Score: {profile.profileData.profileData.total_score}
           </Badge>
         </Stack>
 
-        <Stack mt={8} direction={"row"} spacing={4}>
-          <Button
+        <ButtonGroup spacing="4" colorScheme="customDarkBlue">
+          <IconButton
             flex={1}
-            fontSize={"sm"}
-            rounded={"full"}
-            _focus={{
-              bg: "gray.200",
-            }}
+            alignSelf={"center"}
+            bgColor="#3C6286"
+            color="white"
+            fontSize="lg"
+            variant="solid"
+            textDecoration="none"
+            _hover={{ bgColor: "gray" }}
+            _active={{ color: "#FBD154" }}
+            boxShadow="0 10px 10px #0003"
+            as={Link}
+            to="/gamepage"
+            icon={<ArrowBackIcon />}
           >
-            Close
-          </Button>
-          <Button
+            Back
+          </IconButton>
+          <IconButton
             flex={1}
-            fontSize={"sm"}
-            rounded={"full"}
-            bg={"blue.400"}
-            color={"white"}
-            boxShadow={
-              "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-            }
-            _hover={{
-              bg: "blue.500",
-            }}
-            _focus={{
-              bg: "blue.500",
-            }}
+            color="#3C6286"
+            variant="outline"
+            textDecoration="none"
+            fontSize="lg"
+            _hover={{ bgColor: "#B8D4E6" }}
+            _active={{ color: "#FBD154" }}
+            boxShadow="0 10px 10px #0003"
+            icon={<EditIcon />}
           >
             Update
-          </Button>
-          <Button
+          </IconButton>
+          <IconButton
             flex={1}
-            fontSize={"sm"}
-            rounded={"full"}
-            bg={"red.400"}
-                      color={"white"}
-                      onClick={handleDelete}
-            boxShadow={
-              "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-            }
-            _hover={{
-              bg: "red.500",
-            }}
-            _focus={{
-              bg: "red.600",
-            }}
+            bg={"#A3646D"}
+            color={"white"}
+            onClick={handleDelete}
+            fontSize="lg"
+            _hover={{ bgColor: "gray" }}
+            _active={{ color: "#FBD154" }}
+            boxShadow="0 10px 10px #0003"
+            icon={<DeleteIcon />}
           >
             Delete
-          </Button>
-        </Stack>
+          </IconButton>
+        </ButtonGroup>
       </Box>
     </Center>
   );

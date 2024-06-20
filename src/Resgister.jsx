@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Progress,
   Box,
@@ -18,15 +18,13 @@ import {
   InputRightElement,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   IconButton,
   Container,
   Stack
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
+import { HiEye, HiEyeOff } from "react-icons/hi";
 import { Link, Link as RouterLink, useNavigate } from "react-router-dom";
 import { createUser } from "./apis"
 
@@ -37,6 +35,11 @@ export default function Multistep() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(0);
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [sound, setSound] = useState("");
+
+
 
   //State for the form data
   const [formData, setFormData] = useState({
@@ -44,7 +47,7 @@ export default function Multistep() {
     password: "",
     name: "",
     avatar: null,
-    butterflies: false,
+    butterflies: "no",
     elephants: 0,
     games: "",
     color: "",
@@ -64,20 +67,47 @@ export default function Multistep() {
   })
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    const parsedValue = value === "true" || value === "false" ? value === "true" : value
+    const { name, value, files } = e.target;
+    const parsedValue = value === 'yes' || value === 'no' ? value === 'yes' : value
+    
+    if (name === "sound" && value.trim() !== "") {
+      setSound(parsedValue)
+      setProgress(33.33)
+      return
+    }
+
     setFormData({
       ...formData,
       [name]: parsedValue,
     });
-
-    if (name === "sound" && value.trim() !== "") {
-      setProgress(33.33)
+    
+    if (name === "avatar") {
+      setFormData((prev) => ({ ...prev, avatar: files[0] }))
+      setImageUploaded(true)
+    } else {
+      setFormData((prev) => ({...prev, [name]: value}))
     }
+    
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const { value } = e.target;
+    setConfirmPassword(value);
+    console.log("Password: ", confirmPassword)
   };
 
   const handleSubmit = () => {
     console.log("Form Data: ", formData);
+    if (formData.password !== confirmPassword) {
+      toast({
+        title: "Password Mismatch",
+        description: "Passwords do not match. Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return
+    }
     createUser(formData);
     toast({
       //Maybe change this depending on backend response?
@@ -87,7 +117,7 @@ export default function Multistep() {
       duration: 3000,
       isClosable: true,
     });
-    // navigate("/");
+    navigate("/login");
   }
 
   // useEffect(() => {
@@ -147,7 +177,14 @@ export default function Multistep() {
           ) : step === 2 ? (
             <Form2 formData={formData} handleInputChange={handleInputChange} />
           ) : (
-            <Form3 formData={formData} handleInputChange={handleInputChange} />
+            <Form3
+              formData={formData}
+              handleInputChange={handleInputChange}
+              handleConfirmPasswordChange={handleConfirmPasswordChange}
+              imageUploaded={imageUploaded}
+              setImageUploaded={setImageUploaded}
+              confirmPassword={confirmPassword}
+            />
           )}
           <ButtonGroup mt="5%" w="100%" colorScheme="customDarkBlue">
             <Flex w="100%" justifyContent="space-between">
@@ -229,7 +266,7 @@ export default function Multistep() {
   );
 }
 
-const Form1 = ({ formData, handleInputChange }) => {
+const Form1 = ({ formData, handleInputChange, sound }) => {
   
   return (
     <>
@@ -260,7 +297,7 @@ const Form1 = ({ formData, handleInputChange }) => {
           <Input
             id="sound"
             name="sound"
-            value={formData.sound}
+            value={sound}
             placeholder="ex. Splashing, giggling, etc..."
             sx={{
               "::placeholder": {
@@ -321,14 +358,15 @@ const Form2 = ({formData, handleInputChange}) => {
         w="100%"
         color="#3C6286"
         textAlign={"center"}
-        mb="2%"
+        mt="-1rem"
       >
         To see with our hearts...
       </Heading>
 
-      <SimpleGrid columns={2} spacing={5} mb="3%">
+      <SimpleGrid columns={2} spacing={5}>
         <FormControl>
           <FormLabel
+            maxW="11rem"
             htmlFor="color"
             fontWeight={"xl"}
             fontSize="1.5rem"
@@ -340,35 +378,44 @@ const Form2 = ({formData, handleInputChange}) => {
             id="color"
             name="color"
             placeholder="ex. auburn, fuchsia, flaxen..."
+            maxW="11rem"
             onChange={handleInputChange}
             value={formData.color}
-            color="blue"
+            color="#82B0E1"
+            focusBorderColor="#6C6381"
+            borderRadius="xl"
+            size="xl"
           />
         </FormControl>
 
         <FormControl>
-          <FormLabel
-            htmlFor="elephants"
-            fontWeight={"xl"}
-            fontSize="1.5rem"
-            color="#3C6286"
-          >
-            How many elephants can fit on your planet?
-          </FormLabel>
-          <NumberInput>
-            <NumberInputField
-              id="elephants"
-              name="elephants"
-              min={0}
-              onChange={handleInputChange}
-              value={formData.elephants}
-              color="blue"
-            />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+          <SimpleGrid columns={2}>
+            <FormLabel
+              htmlFor="elephants"
+              fontWeight={"xl"}
+              fontSize="1.5rem"
+              color="#3C6286"
+              maxW="7rem"
+            >
+              How many elephants can fit on your planet?
+            </FormLabel>
+            <NumberInput maxW="4rem" alignSelf="center">
+              <NumberInputField
+                id="elephants"
+                name="elephants"
+                min={0}
+                onChange={handleInputChange}
+                value={formData.elephants}
+                color="#82B0E1"
+                focusBorderColor="#6C6381"
+                borderRadius="xl"
+                size="xl"
+                placeholder="Ex. 42"
+                textAlign="center"
+                padding=".5rem"
+              />
+            </NumberInput>
+          </SimpleGrid>
         </FormControl>
       </SimpleGrid>
 
@@ -380,13 +427,13 @@ const Form2 = ({formData, handleInputChange}) => {
           placeholder="ex. They make me feel..."
           rows={3}
           shadow="sm"
-          focusBorderColor="brand.400"
-          fontSize={{
-            sm: "sm",
-          }}
+          fontSize="1.5rem"
           onChange={handleInputChange}
           value={formData.bestFriend}
-          color="blue"
+          color="#82B0E1"
+          focusBorderColor="#6C6381"
+          borderRadius="xl"
+          size="xl"
         />
         <FormHelperText></FormHelperText>
       </FormControl>
@@ -394,54 +441,111 @@ const Form2 = ({formData, handleInputChange}) => {
   );
 };
 
-const Form3 = ({formData, handleInputChange}) => {
+
+
+
+const Form3 = ({
+  formData,
+  handleInputChange,
+  handleConfirmPasswordChange,
+  imageUploaded,
+  setImageUploaded,
+  confirmPassword,
+}) => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  
+  const fileInputRef = useRef(null);
+
+  const handleUpload = () => {
+    fileInputRef.current.click();
+  };
+
   return (
     <>
-      <Heading fontFamily="Lobster Two" w="100%" textAlign={"center"}>
+      <Heading
+        fontFamily="Lobster Two"
+        w="100%"
+        textAlign={"center"}
+        mt={"-1rem"}
+        color="#3C6286"
+      >
         What is essential...
       </Heading>
-      {/* <SimpleGrid columns={2} spacing={6}> */}
-        <FormControl display="flex" alignItems="flex-start">
-          <FormLabel htmlFor="name" fontWeight={"xl"} fontSize="1.4rem">
+      <FormControl
+        display="flex"
+        flexDirection={{ base: "column", md: "row" }}
+        alignItems="center"
+      >
+        <Box flex="1">
+          <FormLabel
+            htmlFor="name"
+            fontSize="1.4rem"
+            fontWeight={"xl"}
+            color="#3C6286"
+            alignSelf="center"
+          >
             What do the adults call you?
           </FormLabel>
           <Input
             id="name"
-          name="name"
-          width="12rem"
+            name="name"
+            width="12rem"
             placeholder="Enter your first name"
             textAlign="start"
             onChange={handleInputChange}
             value={formData.name}
-            color="blue"
+            color="#82B0E1"
+            focusBorderColor="#6C6381"
+            borderRadius="xl"
+            size="xl"
             marginRight="2"
           />
+        </Box>
+        <Box
+          flex="1"
+          display="flex"
+          flexDirection="column"
+          alignItems={{ base: "center", md: "flex-start" }}
+          marginTop={{ base: "4", md: "0" }}
+        >
           <IconButton
             aria-label="upload profile image"
             icon={<CgProfile />}
             isRound
-            alignSelf="flex-end"
             marginLeft="2"
+            onClick={handleUpload}
           />
           <Input
+            ref={fileInputRef}
             type="file"
             accept=".png, .jpg, .jpeg"
             name="avatar"
-            onChange={handleInputChange}
+            onChange={(e) => {
+              handleInputChange(e);
+              setImageUploaded(true);
+            }}
             display="none"
           />
-          <FormHelperText fontSize="xs" as="sup" marginTop="1">
-            Upload a profile image
-          </FormHelperText>
-        </FormControl>
-
-
+          {imageUploaded && formData.avatar && (
+            <Text fontSize="xs" color="green.500" mt="1">
+              {formData.avatar.name} Loaded Successfully
+            </Text>
+          )}
+          {!imageUploaded && (
+            <FormHelperText fontSize="xs" as="sup" marginTop="1">
+              Upload a profile image
+            </FormHelperText>
+          )}
+        </Box>
+      </FormControl>
 
       <FormControl mr="5%">
-        <FormLabel htmlFor="username" fontWeight={"xl"} fontSize="1.4rem">
+        <FormLabel
+          htmlFor="username"
+          fontWeight={"xl"}
+          fontSize="1.4rem"
+          color="#3C6286"
+        >
           What would you like to be called?
         </FormLabel>
         <Input
@@ -452,13 +556,21 @@ const Form3 = ({formData, handleInputChange}) => {
           textAlign="start"
           onChange={handleInputChange}
           value={formData.username}
-          color="blue"
+          color="#82B0E1"
+          focusBorderColor="#6C6381"
+          borderRadius="xl"
+          size="xl"
         />
       </FormControl>
 
       <SimpleGrid columns={2} spacing={5}>
         <FormControl>
-          <FormLabel htmlFor="password" fontWeight={"xl"} fontSize="1.4rem">
+          <FormLabel
+            htmlFor="password"
+            fontWeight={"xl"}
+            fontSize="1.4rem"
+            color="#3C6286"
+          >
             Password:
           </FormLabel>
           <InputGroup size="md">
@@ -469,12 +581,24 @@ const Form3 = ({formData, handleInputChange}) => {
               placeholder="Enter password"
               onChange={handleInputChange}
               value={formData.password}
-              color="blue"
+              color="#82B0E1"
+              focusBorderColor="#6C6381"
+              borderRadius="xl"
+              size="xl"
+              fontSize="1.2rem"
             />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
-                {show ? "Hide" : "Show"}
-              </Button>
+            <InputRightElement>
+              <IconButton
+                variant="link"
+                color="#82B0E1"
+                aria-label={show ? "Mask password" : "Reveal password"}
+                bg="none"
+                boxShadow="none"
+                icon={show ? <HiEyeOff /> : <HiEye />}
+                onClick={handleClick}
+                _hover={{ color: "gray", bg: "none" }}
+                mt="1.5rem"
+              />
             </InputRightElement>
           </InputGroup>
         </FormControl>
@@ -484,6 +608,8 @@ const Form3 = ({formData, handleInputChange}) => {
             htmlFor="confirm-password"
             fontWeight={"xl"}
             fontSize="1.4rem"
+            color="#3C6286"
+            isTruncated
           >
             Confirm Password:
           </FormLabel>
@@ -493,12 +619,17 @@ const Form3 = ({formData, handleInputChange}) => {
               name="confirmPassword"
               type={show ? "text" : "password"}
               placeholder="Confirm password" // I need to make a check where the two passwords are identical.
-              color="blue"
+              color="#82B0E1"
+              focusBorderColor="#6C6381"
+              borderRadius="xl"
+              size="xl"
+              fontSize="1.2rem"
+              onChange={handleConfirmPasswordChange}
+              value={confirmPassword}
             />
           </InputGroup>
         </FormControl>
       </SimpleGrid>
-      {/* </SimpleGrid> */}
     </>
   );
 };
