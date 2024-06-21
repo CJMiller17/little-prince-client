@@ -148,16 +148,13 @@ const GamePage = () => {
           </Box>
         ))}
       </Box>
-<<<<<<< HEAD
-
+      
       <IconButton
         aria-label="navigate tp profile"
         icon={<CgProfile />}
         isRound
         onClick={handleSubmit}
       />
-=======
->>>>>>> main
     </>
   );
 };
