@@ -130,7 +130,15 @@
 
 
 
-
+import {
+    Button,
+    Box,
+    UnorderedList,
+    ListItem,
+    Stack,
+    Text,
+    Input,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import "./Conceited.css";
 
@@ -190,36 +198,51 @@ const PlayGame = ({ onChangeScore }) => {
         })
     }
     console.log(dataTyping)
+
     return (
-        <div className="playing">
-            <ul className="list">
-                {
-                    dataTyping.map((word, index) =>
-                        <li
-                            key={index}
-                            className={
-                                word.status === true
-                                    ? "true"
-                                    : word.status === false
-                                        ? "false"
-                                        : ""
-                            }
-                        >
-                            {
-                                word.value
-                            }
-                        </li>    
-                    )
-                }
-            </ul>
-            <div className="inputForm">
-                <input
-                    type="text"
-                    onChange={handleChangeTyping}
-                    value={textTyping.value} />
-            </div>
-      </div>
-  ) 
+      <Box className="playing-conceited" maxW="30rem">
+        <UnorderedList
+          className="list"
+          borderRadius="xl"
+          boxShadow="dark-lg"
+          ml="0"
+          mb="2rem"
+        >
+          {dataTyping.map((word, index) => (
+            <ListItem
+              key={index}
+              p="10px"
+              display="inline-block"
+              textShadow="0 2px 2px #0009"
+              className={
+                word.status === true
+                  ? "true"
+                  : word.status === false
+                  ? "false"
+                  : ""
+              }
+              fontSize="1.5rem"
+            >
+              {word.value}
+            </ListItem>
+          ))}
+        </UnorderedList>
+        <Box display="flex" justifyContent="center">
+          <Input
+            type="text"
+            textAlign="center"
+            borderRadius="xl"
+            focusBorderColor="#6C6381"
+            maxW="25rem"
+            onChange={handleChangeTyping}
+            value={textTyping.value}
+            color="white"
+            size="xl"
+            fontSize="1.5rem"
+          />
+        </Box>
+      </Box>
+    ); 
 };
 
 export default PlayGame;

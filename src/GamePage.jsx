@@ -66,19 +66,21 @@ const GamePage = () => {
     const { auth, profile } = useContext(AuthContext);
     const navigate = useNavigate()    
 
-    const handleSubmit = () => {
-    console.log("HANDLE SUBMIT Token: ", auth.accessToken)
-    getCurrentUserProfile(auth.accessToken)
-      .then((response) => {
-        console.log("Data: ", response.data);
-        profile.setProfileData(currentData => ({
-          ...currentData, profileData: response.data
-        }))
-        navigate("/profile");
-      })
-      .catch((error) => {
-        console.log("Error Logging In: ", error);
-      });
+  // getCurrentUserProfile(auth.accessToken)
+  //   .then((response) => {
+  //     console.log("Data: ", response.data);
+  //     profile.setProfileData((currentData) => ({
+  //       ...currentData,
+  //       profileData: response.data,
+        
+  //     }));
+  //   })
+  //   .catch((error) => {
+  //     console.log("Error Logging In: ", error);
+  //   });
+    
+  const handleSubmit = () => {
+      navigate("/profile");
     }
   
   const handlePlanetClick = (route) => {
@@ -128,7 +130,7 @@ const GamePage = () => {
       </Box>
 
       <IconButton
-        aria-label="upload profile image"
+        aria-label="navigate tp profile"
         icon={<CgProfile />}
         isRound
         onClick={handleSubmit}

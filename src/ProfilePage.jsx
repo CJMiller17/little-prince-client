@@ -13,18 +13,30 @@ import {
 import { ArrowBackIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getCurrentUserProfile, deleteUser } from "./apis";
+import { deleteUser } from "./apis";
 import { AuthContext } from "./ContextProvider";
 import { baseURL } from "./apis";
 
 export default function ProfilePage({ username, name, avatar }) {
-    const { auth, profile } = useContext(AuthContext);
-    const navigate = useNavigate()
+  const { auth, profile } = useContext(AuthContext);
+  const navigate = useNavigate()
+  const [totalScore, setTotalScore] = useState(0)
+  const [profileImage, setProfileImage] = useState("")
+
+  console.log('BLAMMO: PROFILE: ', profile)
+
+  useEffect(() => {
+    if (profile?.profileData?.profileData) {
+      setTotalScore(
+        profile.profileData.profileData.score_conceited_man +
+        profile.profileData.profileData.score_drunkard +
+        profile.profileData.profileData.score_geographer
+      )
+      setProfileImage(baseURL + profile.profileData.profileData.profile_image)
+    }
+  }, [profile])
   
-    console.log("Profile: ", profile)
-    console.log("BaseURL: ", baseURL);
-  
-    const handleDelete = () => {
+  const handleDelete = () => {
       console.log("Auth: ", auth, "Profile.id: ", profile)
           deleteUser(auth, profile.profileData.profileData.id)
             .then(() => {
@@ -35,11 +47,9 @@ export default function ProfilePage({ username, name, avatar }) {
             });
       }
 
-  
-  const profileImage = baseURL + profile.profileData.profileData.profile_image;
   console.log("ProfileImage Path: ", profileImage)
 
-  return (
+  return profile?.profileData?.profileData ? ( // This satisfies a race condition. (?.) are looking for True, but wont throw. Just returns undefined.
     <Center py={{ base: "20" }} px={{ base: "0", sm: "8" }}>
       <Box
         width={"320px"}
@@ -90,7 +100,7 @@ export default function ProfilePage({ username, name, avatar }) {
             color="#3C6286"
             minW="6.5rem"
             textAlign="left"
-            bg={useColorModeValue("gray.100", "gray.800")}
+            bg="gray.100"
             fontWeight={"xl"}
             fontSize="1rem"
           >
@@ -102,7 +112,7 @@ export default function ProfilePage({ username, name, avatar }) {
             color="#3C6286"
             minW="6.5rem"
             textAlign="left"
-            bg={useColorModeValue("gray.100", "gray.800")}
+            bg="gray.100"
             fontWeight={"xl"}
             fontSize="1rem"
           >
@@ -114,7 +124,7 @@ export default function ProfilePage({ username, name, avatar }) {
             color="#3C6286"
             minW="6.5rem"
             textAlign="left"
-            bg={useColorModeValue("gray.100", "gray.800")}
+            bg="gray.100"
             fontWeight={"xl"}
             fontSize="1rem"
           >
@@ -123,14 +133,14 @@ export default function ProfilePage({ username, name, avatar }) {
           <Badge
             px={2}
             py={1}
-            color="#3C6286"
+            color="white"
             minW="6.5rem"
             textAlign="left"
-            bg={useColorModeValue("gray.300", "gray.800")}
+            bg="gray.500"
             fontWeight={"xl"}
             fontSize="1rem"
           >
-            Total Score: {profile.profileData.profileData.total_score}
+            Total Score: {totalScore}
           </Badge>
         </Stack>
 
@@ -181,5 +191,5 @@ export default function ProfilePage({ username, name, avatar }) {
         </ButtonGroup>
       </Box>
     </Center>
-  );
+  ) : null;
 }

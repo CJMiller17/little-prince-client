@@ -1,31 +1,7 @@
-import Home from "./Home"
-import PlayGame from "./PlayGame"
-import EndGame from "./EndGame"
+import Home from "./HomeConceited"
+import PlayGame from "./PlayGameConceited"
+import EndGame from "./EndGameConceited"
 import { useEffect, useState } from "react"
-
-// Future implementation of openAi to generate the paragraph:
-
-/*
-const { Configuration, OpenAIApi } = require("openai");
-
-const configuration = new Configuration({
-  apiKey: "your-api-key",
-});
-const openai = new OpenAIApi(configuration);
-
-async function generateText(prompt) {
-  const response = await openai.createCompletion({
-    model: "text-davinci-004",
-    prompt: prompt,
-    max_tokens: 150,
-  });
-  return response.data.choices[0].text;
-}
-
-const prompt =
-  "Write a paragraph in the style of 'Le Petit Prince' where the conceited man talks about himself.";
-generateText(prompt).then((text) => console.log(text));
-*/
 
 
 
@@ -42,7 +18,7 @@ function ConceitedApp() {
             })
             const timeOutGame = setTimeout(() => {
                setStatusGame("endGame")
-            }, 60000)
+            }, 600)
            return () => clearTimeout(timeOutGame) 
         }
     }, [statusGame])

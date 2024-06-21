@@ -40,9 +40,9 @@ function LampApp() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="App">
+      <div className="App-lamp">
         <Heading fontFamily="Lobster Two">Lamp Lighter Game</Heading>
-        <div className="game-container">
+        <div className="game-container-lamp">
           <Inventory flames={flames} />
           <PlanetGameBoard lampposts={lampposts} />
         </div>

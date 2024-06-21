@@ -72,12 +72,6 @@
   transition: width 0.5s ease-in-out;
 }
 
-.planet-line {
-  position: absolute;
-  border: 2px dotted white;
-  width: 100px;
-  transform: rotate(45deg); 
-}
 
 /* 
 Color Palette:

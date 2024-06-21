@@ -8,7 +8,7 @@ export default function Inventory({ flames }) {
     <Droppable droppableId="inventory">
       {(provided) => (
         <div
-          className="inventory"
+          className="inventory-lamp"
           ref={provided.innerRef}
           {...provided.droppableProps}
         >

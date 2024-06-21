@@ -1,12 +1,13 @@
+/* This needs to be made to only be a square at all times */
 
-.puzzle-board { /* This needs to be made to only be a square at all times */
+.puzzle-board { 
     display: grid;
     width: 100%;
     max-width: 600px;
     height: 600px; 
     margin: auto;
     border: 2px solid #000;
-    background: radial-gradient(#3d3d42, #191a1f);
+    background: radial-gradient(#82B0E1, #3C6286);
     box-shadow: 0 10px 10px #0005;
 }
 
@@ -32,8 +33,8 @@
 }
 
 
-.app {
-    background: radial-gradient(#3d3d42, #191a1f);
+.App-geographer {
+    background: radial-gradient(#82B0E1, #3C6286);
     height: 100vh;
     font-family: 'Poppins', sans-serif;
     color: #eeeeee;
@@ -66,50 +67,3 @@ button {
 button:hover {
     background-color: #333;
 }
-
-
-
-/* src/components/PuzzleBoard.css 
-.puzzle-board {
-    display: grid;
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-    border: 2px solid #000;
-}
-
- src/components/Tile.css 
-.tile {
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    background-color: #fff;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
-    user-select: none;
-}
-
-.tile.blank {
-    background-color: transparent;
-    cursor: default;
-}
-
-src/App.css
-.app {
-    text-align: center;
-    padding: 20px;
-}
-
-.controls {
-    margin-bottom: 20px;
-}
-
-button {
-    margin: 0 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-*/
