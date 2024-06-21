@@ -7,11 +7,13 @@
 .App {
     background: radial-gradient(#82B0E1, #3C6286);
     height: 100vh;
-    font-family: Poppins;
-    color: #eeee;
     display: flex;
     justify-content: center;
     align-items: center;
+<<<<<<< HEAD
+    color: #eeee;
+}
+=======
 }
 
 .home .title {
@@ -29,6 +31,7 @@
     letter-spacing: 5px;
     box-shadow: 0 10px 10px #0005;
 } */
+>>>>>>> main
 
 @keyframes showHome {
     to{
@@ -41,57 +44,38 @@
     animation: showHome 2s .3s ease-in-out 1 forwards;
 }
 
-.playing {
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 20% 1fr;
-    padding: 50px;
-    text-align: center;
-    gap: 10px;
+.playing-conceited {
     opacity: 0;
-    animation: showHome 1s ease-in-out 1 forwards;
+    animation: showHome .5s ease-in-out 1 forwards;
 }
 
-.playing .list {
+.playing-conceited .list {
     padding: 50px;
-    list-style: none;
-    text-align: left;
-    background-image: linear-gradient(45deg, #5556a0, #ab84b4);
-    border-radius: 20px;
-    box-shadow: 0 2px 0 #fff;
+    background: radial-gradient(#C7834A, #C67E63, #A3646D );
 }
 
-.playing li {
-    display: inline-block;
-    font-size: x-large;
-    padding:  10px;
-    text-shadow: 0 2px 2px #0009;
+
+
+/* This section is IMPORTANT!! */
+
+.playing-conceited {
+    position: relative; /* Ensure the parent container is positioned */
+}
+
+.playing-conceited li {
     position: relative;
 }
 
-.playing input {
-    width: 100%;
-    padding: 20px 0;
-    outline: none;
-    text-align: center;
-    font-size: x-large;
-    background-color: #0005;
-    border: none;
-    color: #fff;
-    border-radius: 20px;
-    font-family: Poppins;
-}
-
-.playing li.true {
+.playing-conceited li.true {
     color: greenyellow;
 }
 
-.playing li.false {
+.playing-conceited li.false {
     color: red;
 }
 
-.playing li.true::after,
-.playing li.false::after {
+.playing-conceited li.true::after,
+.playing-conceited li.false::after {
     position: absolute;
     inset: 0 0 0 0;
     content: "+1";
@@ -99,9 +83,11 @@
     animation: showPoint .5s linear 1 forwards;
 }
 
-.playing li.false::after {
+.playing-conceited li.false::after {
     content: "-1";
 }
+
+/* This section is IMPORTANT!! */
 
 @keyframes showPoint {
     0% {
@@ -119,22 +105,4 @@
 .endGame {
     opacity: 0;
     animation: showHome 1s .3s ease-in-out 1 forwards;
-}
-
-.endGame .result {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 50 px;
-    text-align: center;
-    font-size: 20px;
-    text-shadow: 0 10px 10px #000;
-}
-
-.endGame .number {
-    font-size: 50px;
-
-}
-
-.difficulty-selector {
-    margin: auto;
 }

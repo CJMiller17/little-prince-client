@@ -5,7 +5,10 @@ import React, {useContext} from "react";
 // const baseURL = "http://127.0.0.1:8000";
 // const baseURL = "http://127.0.0.1:8000";
 export const baseURL = import.meta.env.VITE_BASE_URL
+// export con
 console.log("baseURL:", baseURL)
+
+// const { auth, profile } = useContext(AuthContext);
 
 
 // GET TOKEN
@@ -24,7 +27,7 @@ export const getToken = ({ username, password }) => {
 
 
 // CREATE
-export const createUser = ({ username, password, name, avatar, butterflies, elephants, games, color, birds, scorePrince, scoreKing, scoreConceited, scoreDrunkard, scoreBusiness, scoreLamplighter, scoreGeographer, scoreEarth, scoreTotal, item1, item2, item3 }) => {
+export const createUser = ({ username, password, name, avatar, butterflies, elephants, color, scorePrince, scoreKing, scoreConceited, scoreDrunkard, scoreBusiness, scoreLamplighter, scoreGeographer, scoreEarth }) => {
   axios
     .post(
       `${baseURL}/profiles/create/`,
@@ -35,9 +38,7 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
         profile_image: avatar,
         butterflies,
         elephants,
-        games,
         fav_color: color,
-        birds_collected: birds,
         score_little_prince: scorePrince,
         score_king: scoreKing,
         score_conceited_man: scoreConceited,
@@ -45,11 +46,7 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
         score_business_man: scoreBusiness,
         score_lamplighter: scoreLamplighter,
         score_geographer: scoreGeographer,
-        score_earth: scoreEarth,
-        total_score: scoreTotal,
-        item_1: item1,
-        item_2: item2,
-        item_3: item3,
+        score_earth: scoreEarth
       },
       {
         headers: {
@@ -85,14 +82,12 @@ export const getCurrentUserProfile = (retrievedToken) => {
 // UPDATE
 export const updateUser = ({
   accessToken,
-  username,
+  profilePrimaryKey,
   name,
   avatar,
   butterflies,
   elephants,
-  games,
   color,
-  birds,
   scorePrince,
   scoreKing,
   scoreConceited,
@@ -101,22 +96,16 @@ export const updateUser = ({
   scoreLamplighter,
   scoreGeographer,
   scoreEarth,
-  scoreTotal,
-  item1,
-  item2,
-  item3,
 }) => {
-  axios
+  return axios
     .put(
-      `${baseURL}/profiles/me/`,
+      `${baseURL}/profiles/${profilePrimaryKey}/update/`,
       {
         name: name,
         profile_image: avatar,
         butterflies,
         elephants,
-        games,
         fav_color: color,
-        birds_collected: birds,
         score_little_prince: scorePrince,
         score_king: scoreKing,
         score_conceited_man: scoreConceited,
@@ -125,15 +114,11 @@ export const updateUser = ({
         score_lamplighter: scoreLamplighter,
         score_geographer: scoreGeographer,
         score_earth: scoreEarth,
-        total_score: scoreTotal,
-        item_1: item1,
-        item_2: item2,
-        item_3: item3,
       },
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     )

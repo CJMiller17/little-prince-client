@@ -1,17 +1,23 @@
 /* src/Lamp.css */
-.App {
+.App-lamp {
     text-align: center;
+    background: radial-gradient(#82B0E1, #3C6286);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #eeee;
 }
 
-.game-container {
+.game-container-lamp {
     display: flex;
 }
 
-.inventory {
+.inventory-lamp {
     margin-right: 20px;
 }
 
-.gameboard {
+.gameboard-lamp {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-gap: 10px;
@@ -27,7 +33,7 @@
 }
 
 .lamppost-placeholder {
-    color: grey;
+    color: white;
 }
 
 .flame {
