@@ -3,9 +3,10 @@ import PlayGame from "./PlayGameGeographer";
 import EndGame from "./EndGameGeographer";
 import { useEffect, useState } from "react";
 
-function ConceitedApp() {
+function GeographerApp() {
   const [statusGame, setStatusGame] = useState(null);
   const [score, setScore] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(60); //For clock purposes
 
   useEffect(() => {
     if (statusGame === "playGame") {
@@ -13,6 +14,7 @@ function ConceitedApp() {
         right: 0,
         wrong: 0,
       });
+      
       const timeOutGame = setTimeout(() => {
         setStatusGame("endGame");
       }, 300000);
@@ -55,4 +57,4 @@ function ConceitedApp() {
   return <div className="App">{layout}</div>;
 }
 
-export default ConceitedApp;
+export default GeographerApp;

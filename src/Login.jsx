@@ -198,6 +198,7 @@ export const PasswordField = forwardRef(({ password, setPassword, ...props}, ref
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           focusBorderColor="#6C6381"
+          fontFamily="Shadows Into Light Two"
           ref={mergeRef}
           autoComplete="current-password"
           {...props}
@@ -208,7 +209,6 @@ export const PasswordField = forwardRef(({ password, setPassword, ...props}, ref
             aria-label={isOpen ? "Mask password" : "Reveal password"}
             bg="none"
             boxShadow="none"
-            // border="none"
             icon={isOpen ? <HiEyeOff /> : <HiEye />}
             onClick={onClickReveal}
             _hover={{ color: "gray", bg: "none" }}

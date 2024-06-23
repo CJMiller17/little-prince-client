@@ -136,13 +136,14 @@ import {
     UnorderedList,
     ListItem,
     Stack,
+    SimpleGrid,
     Text,
     Input,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import "./Conceited.css";
 
-const PlayGame = ({ onChangeScore }) => {
+const PlayGame = ({ onChangeScore, score, timeLeft }) => {
     const [defaultData] = useState("The conceited man stood proudly on his tiny planet, his nose held high in the air. 'I am the most handsome, the most intelligent, and the most admired in all the universe,' he proclaimed, not noticing that he was the only inhabitant of his world. 'Applaud me!' he would demand")
     const [dataTyping, setDataTyping] = useState([])
     const [textTyping, setTextTyping] = useState({
@@ -206,7 +207,7 @@ const PlayGame = ({ onChangeScore }) => {
           borderRadius="xl"
           boxShadow="dark-lg"
           ml="0"
-          mb="2rem"
+          mb=".7rem"
         >
           {dataTyping.map((word, index) => (
             <ListItem
@@ -227,6 +228,19 @@ const PlayGame = ({ onChangeScore }) => {
             </ListItem>
           ))}
         </UnorderedList>
+        <SimpleGrid
+          columns={1}
+          display="flex"
+          justifyContent="space-around"
+          mb=".7rem"
+        >
+          <Box textShadow="0 2px 2px #0009">Time Left:{timeLeft}</Box>
+          <Text
+            textShadow="0 2px 2px #0009"
+          >
+            Score: {score.right}
+          </Text>
+        </SimpleGrid>
         <Box display="flex" justifyContent="center">
           <Input
             type="text"

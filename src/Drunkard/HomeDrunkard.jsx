@@ -41,12 +41,8 @@ const Home = ({ onGame }) => {
       >
         Asteroid 327
       </Text>
-      <Stack>
-        <Button
-          variant="solid"
-          mt="3rem"
-          onClick={() => onGame("playGame")}
-        >
+      <Stack display="flex" alignItems="center">
+        <Button variant="solid" mt="3rem" onClick={() => onGame("playGame")}>
           Play Game
         </Button>
         <SimpleGrid
@@ -55,11 +51,7 @@ const Home = ({ onGame }) => {
           justifyContent="center"
           spacing="3"
         >
-          <Button
-            variant="solid"
-            onClick={onOpen}
-            size="xs"
-          >
+          <Button variant="solid" onClick={onOpen} size="xs" maxW="3.9rem">
             Rules
           </Button>
           <IconButton

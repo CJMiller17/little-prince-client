@@ -22,6 +22,7 @@ function DrunkardApp() {
             const timeOutGame = setTimeout(() => {
                setStatusGame("endGame")
             }, 60000) // Time of how long a game lasts
+            // return () => clearTimeout(timeOutGame)
 
             const intervalTimer = setInterval(() => {
                 setTimeLeft((prevTimeLeft) => {
@@ -69,8 +70,8 @@ function DrunkardApp() {
     switch (statusGame) {
         case "playGame":
             layout = <PlayGame
-                score={score}
                 onChangeScore={handleChangeScore}
+                score={score}
                 timeLeft={timeLeft}
                 cssEffects={cssEffects}
                 setCSSEffects={setCSSEffects} />
