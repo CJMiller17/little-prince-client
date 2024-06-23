@@ -25,6 +25,7 @@ const Home = ({ onGame }) => {
     <div className="home">
       <Heading
         fontSize="7xl"
+        color="white"
         textAlign="center"
         textShadow="0 10px 10px #000"
         fontFamily="Amatic SC"
@@ -32,16 +33,19 @@ const Home = ({ onGame }) => {
       >
         The Drunkard
       </Heading>
-      <Text textShadow="0 10px 10px #000" fontSize="xl" textAlign="center">
+      <Text
+        textShadow="0 10px 10px #000"
+        fontSize="xl"
+        textAlign="center"
+        color="white"
+      >
         Asteroid 327
       </Text>
       <Stack>
         <Button
+          variant="solid"
           mt="3rem"
           onClick={() => onGame("playGame")}
-          colorScheme="customDarkBlue"
-          _hover={{ bgColor: "gray" }}
-          _active={{ color: "#FBD154" }}
         >
           Play Game
         </Button>
@@ -52,11 +56,8 @@ const Home = ({ onGame }) => {
           spacing="3"
         >
           <Button
-            margin="0"
-            colorScheme="customDarkBlue"
+            variant="solid"
             onClick={onOpen}
-            _hover={{ bgColor: "gray" }}
-            _active={{ color: "#FBD154" }}
             size="xs"
           >
             Rules
@@ -66,7 +67,6 @@ const Home = ({ onGame }) => {
             maxW="1.5rem"
             p=".2rem"
             alignSelf="center"
-            colorScheme="customDarkBlue"
             _hover={{ bgColor: "gray" }}
             _active={{ color: "#FBD154" }}
             aria-label="home button"
@@ -93,19 +93,19 @@ const RulesModal = ({ isOpen, onClose }) => {
           <ModalHeader fontSize="3xl" textAlign="center" color="#3C6286">
             Drunkard Gameplay Rules
           </ModalHeader>
-          <ModalCloseButton
-            color="white"
-            bg="#3C6286"
-            _hover={{ bgColor: "#82B0E1" }}
-            _active={{ color: "#FBD154" }}
-          />
           <ModalBody color="#3C6286">
-            These are the rules. Many much rules are we!
+            The Little Prince landed on a planet where the only inhabitant is a
+            drunkard who slurs his words. The Little Prince is having a hard
+            time understanding what the man is saying. It is up to you to{" "}
+            <em>
+              <strong>UNSCRAMBLE</strong>
+            </em>{" "}
+            his words in order to help the Little Prince move onto the next
+            planet.
           </ModalBody>
 
           <ModalFooter alignSelf="center">
             <Button
-              colorScheme="customDarkBlue"
               onClick={onClose}
               _hover={{ bgColor: "#82B0E1" }}
               _active={{ color: "#FBD154" }}

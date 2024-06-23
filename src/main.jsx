@@ -7,6 +7,7 @@ import {
   Outlet
 } from 'react-router-dom'
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { CgEye, CgHome } from "react-icons/cg";
 
 // CSS
 import "./index.css"
@@ -27,6 +28,7 @@ import DrunkardApp from './Drunkard/DrunkardApp.jsx';
 import GeographerApp from './Geographer/GeographyApp.jsx';
 import ProfilePage from './ProfilePage.jsx'
 import GamePage from './GamePage.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 function Layout() {
   return (
@@ -38,16 +40,69 @@ function Layout() {
 
 const customTheme = extendTheme({
   colors: {
-    customDarkBlue: {500: "#3C6286"},
-    customBlue: {500: "#82B0E1"},
-    customLightBlue: {500: "#B8D4E6"},
-    customOrange: {500: "#C7834A"},
-    customRed: {500: "#C67E63"},
-    customMaroon: {500: "#A3646D"},
-    customYellow: {500: "#F0BF73"},
-    customPurple: {500: "#6C6381"},
-    customGray: {500: "#787585"},
-    customLightPurple: {500: "#C0B1BE"},
+    customRed: { 500: "#C67E63" },
+    customMaroon: { 500: "#A3646D" },
+    customYellow: { 500: "#F0BF73" },
+  },
+  components: {
+    Button: {
+      variants: {
+        solid: {
+          bgColor: "#3C6286",
+          border: "none",
+          boxShadow: "0 10px 10px #0003",
+          color: "white",
+          fontSize: "xl",
+          size: "md",
+          textDecoration: "none",
+          width: "6rem",
+          _hover: {
+            bgColor: "gray",
+          },
+          _active: {
+            color: "#FBD154",
+            bgColor:"gray"
+          },
+        },
+        outline: {
+          bgColor: "white",
+          borderColor: "#3C6286",
+          boxShadow: "0 10px 10px #0003",
+          color: "#3C6286",
+          fontSize: "xl",
+          size: "md",
+          textDecoration: "none",
+          width: "6rem",
+          _hover: {
+            bgColor: "#B8D4E6",
+          },
+          _active: {
+            color: "#FBD154",
+          },
+        },
+      },
+    },
+    Input: {
+      baseStyle: {
+        field: {
+          borderColor: "#C0B1BE", // Light Purple
+          borderRadius: "lg",
+          boxShadow: "md",
+          color: "#82B0E1", // Reg. Blue
+          fontSize: "1.5rem",
+          maxW: "20rem",
+          paddingLeft: "1rem",
+          size: "xl",
+          textAlign: "start",
+          type: "text",
+          sx: {
+            "::placeholder": {
+              color: "#C0B1BE",
+            },
+          },
+        },
+      },
+    },
   },
 });
 
@@ -74,15 +129,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/lamplighter",
-        element: <LampApp />,
+        element: (
+          <ProtectedRoute>
+            <LampApp />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/conceited",
-        element: <ConceitedApp />,
+        element: (
+          <ProtectedRoute>
+            <ConceitedApp />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/drunkard",
-        element: <DrunkardApp />,
+        element: (
+          <ProtectedRoute>
+            <DrunkardApp />
+          </ProtectedRoute>
+        ),
       },
       {
         // path: "/business",
@@ -90,15 +157,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/geographer",
-        element: <GeographerApp />,
+        element: (
+          <ProtectedRoute>
+            <GeographerApp />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/gamepage",
-        element: <GamePage />,
+        element: (
+          <ProtectedRoute>
+            <GamePage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

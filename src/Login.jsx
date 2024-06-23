@@ -3,11 +3,9 @@ import {
   Button,
   Checkbox,
   Container,
-  Divider,
   FormControl,
   FormLabel,
   Heading,
-  HStack,
   Input,
   Stack,
   Text,
@@ -16,29 +14,30 @@ import {
   InputRightElement,
   useDisclosure,
   useMergeRefs,
-  SimpleGrid,
-  useConst,
   ButtonGroup,
   Flex,
   Spacer,
+  useToast,
+  SimpleGrid,
 } from "@chakra-ui/react";
-import { forwardRef, useContext, useRef, useState, useEffect } from "react"
+import { forwardRef, useContext, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { HiEye, HiEyeOff } from "react-icons/hi"
 import { IoHome } from "react-icons/io5"
 import { AuthContext } from "./ContextProvider";
 import { getToken } from "./apis"
 
-
 const Login = () => {
   const { auth } = useContext(AuthContext)
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("");
+  const toast = useToast()
 
 
   const submit = () => {
-    getToken({ username, password })
+    const insensitiveUsername = username.toLowerCase()
+    getToken({ username: insensitiveUsername, password })
       .then((response) => {
         console.log("Does this match Token Response?: ", response);
         auth.setAccessToken(response.data.access);
@@ -49,6 +48,14 @@ const Login = () => {
       })
       .catch((error) => {
         console.log("Error Logging In: ", error);
+        toast({
+          title: "Login failed",
+          description: "Invalid username or password. Please try again.",
+          status: "error",
+          duration: 3000,
+          position: "top",
+          isClosable: false,
+        });
       });
   };
   
@@ -109,52 +116,40 @@ const Login = () => {
                   Username
                 </FormLabel>
                 <Input
-                  mt="-1rem"
                   id="Username"
-                  type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  color="#82B0E1"
                   focusBorderColor="#6C6381"
-                  borderRadius="xl"
-                  size="xl"
                 />
               </FormControl>
               <PasswordField password={password} setPassword={setPassword} />
             </Stack>
-            <Flex>
-              <Checkbox defaultChecked color="#3C6286" colorScheme="customBlue">
+            <Flex maxW="20rem" justifyContent="space-between">
+              <Checkbox
+                defaultChecked
+                color="#3C6286"
+                styles={{ control: { bg: "#3C6286" } }}
+              >
                 Remember me
               </Checkbox>
-              <Spacer />
               <Button
                 variant="link"
-                p=".3rem"
                 fontSize=".6rem"
-                bg="#82B0E1"
+                bg="#3C6286"
                 _hover={{ bgColor: "gray" }}
                 _active={{ color: "#FBD154" }}
                 color="white"
                 letterSpacing=".01rem"
-                justifyItems="right"
               >
                 Forgot password?
               </Button>
             </Flex>
-            <ButtonGroup>
-              <Button
-                colorScheme="customDarkBlue"
-                width="50%"
-                onClick={submit}
-                _hover={{ bgColor: "gray" }}
-                _active={{ color: "#FBD154" }}
-                boxShadow="0 10px 10px #0005"
-              >
+            <ButtonGroup mt="1rem">
+              <Button variant="solid" onClick={submit}>
                 Sign in
               </Button>
               <IconButton
                 alignSelf="center"
-                colorScheme="customDarkBlue"
                 _hover={{ bgColor: "gray" }}
                 _active={{ color: "#FBD154" }}
                 aria-label="home button"
@@ -195,34 +190,30 @@ export const PasswordField = forwardRef(({ password, setPassword, ...props}, ref
       >
         Password
       </FormLabel>
-      <InputGroup size="xl">
+      <InputGroup maxW="20rem">
+        <Input
+          id="password"
+          name="password"
+          type={isOpen ? "text" : "password"}
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          focusBorderColor="#6C6381"
+          ref={mergeRef}
+          autoComplete="current-password"
+          {...props}
+        />
         <InputRightElement>
           <IconButton
-            variant="link"
             color="#82B0E1"
             aria-label={isOpen ? "Mask password" : "Reveal password"}
             bg="none"
             boxShadow="none"
+            // border="none"
             icon={isOpen ? <HiEyeOff /> : <HiEye />}
             onClick={onClickReveal}
             _hover={{ color: "gray", bg: "none" }}
           />
         </InputRightElement>
-        <Input
-          mt="-1"
-          id="password"
-          ref={mergeRef}
-          borderRadius="xl"
-          focusBorderColor="#6C6381"
-          color="#82B0E1"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type={isOpen ? "text" : "password"}
-          autoComplete="current-password"
-          required
-          {...props}
-        />
       </InputGroup>
     </FormControl>
   );

@@ -8,16 +8,25 @@ import {
 import React, { useEffect, useState, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { IoIosLogOut } from "react-icons/io";
 import { getCurrentUserProfile } from "./apis";
 import { AuthContext } from "./ContextProvider";
-import Rose from '../src/public/assets/princes_planet.jpg'
-import King from "../src/public/assets/kings_planet.jpg";
-import Conceited from "../src/public/assets/conceited_planet.jpg";
-import Drunkard from "../src/public/assets/drunkard_planet.jpg";
-import Business from "../src/public/assets/businessman_planet.jpg";
-import Lamplighter from "../src/public/assets/lamplighter_planet.jpg";
-import Geographer from "../src/public/assets/geographer_planet.jpg";
-import Earth from "../src/public/assets/earth.jpg";
+import Rose from "./public/assets/princes_planet.png"
+import King from "./public/assets/kings_planet.png";
+import Conceited from "./public/assets/conceited_planet.png";
+import Drunkard from "./public/assets/drunkard_planet.png";
+import Business from "./public/assets/businessmna_planet.png";
+import Lamplighter from "./public/assets/lamplighter_planet.png";
+import Geographer from "./public/assets/geographer_planet.png";
+import Earth from "./public/assets/earth.png";
+
+
+
+
+
+
+
+import { useToast } from "@chakra-ui/react";
 
 
 
@@ -27,113 +36,164 @@ const planets = [
     name: "Rose",
     image: Rose, // Why does the name appear behind the image?
     gameRoute: "/rose",
+    locked: true,
   },
   {
     id: 2,
     name: "King",
     image: King, // Why does the name appear behind the image?
     gameRoute: "/king",
+    locked: true,
   },
   {
     id: 3,
     name: "Conceited Man",
     image: Conceited,
     gameRoute: "/conceited",
+    locked: false,
   },
   {
     id: 4,
     name: "Drunkard",
     image: Drunkard,
     gameRoute: "/drunkard",
+    locked: false,
   },
   {
     id: 5,
     name: "Business Man",
     image: Business,
     gameRoute: "/business",
+    locked: true,
   },
   {
     id: 6,
     name: "Lamplighter",
     image: Lamplighter,
     gameRoute: "/lamplighter",
+    locked: true,
   },
   {
     id: 7,
     name: "Geographer",
     image: Geographer,
     gameRoute: "/geographer",
+    locked: false,
   },
   {
     id: 8,
     name: "Earth",
     image: Earth,
     gameRoute: "/earth",
+    locked: true,
   },
 ];
 
 const GamePage = () => {
     const { auth, profile } = useContext(AuthContext);
     const navigate = useNavigate()    
+    const toast = useToast()
 
-  // getCurrentUserProfile(auth.accessToken)
-  //   .then((response) => {
-  //     console.log("Data: ", response.data);
-  //     profile.setProfileData((currentData) => ({
-  //       ...currentData,
-  //       profileData: response.data,
-        
-  //     }));
-  //   })
-  //   .catch((error) => {
-  //     console.log("Error Logging In: ", error);
-  //   });
     
   const handleSubmit = () => {
       navigate("/profile");
     }
   
-  const handlePlanetClick = (route) => {
-      navigate(route)
+  const handleLogout = () => {
+    navigate("/");
+  };
+  
+  const handlePlanetClick = (planet) => {
+    if (planet.locked) {
+      toast({
+        title: "Planet Locked",
+        description: "You need more points to unlock this planet.",
+        status: "warning",
+        position: "top",
+        duration: 2000,
+      });
+    } else {
+      navigate(planet.gameRoute)
+      } 
     }
 
+  const waveAmplitude = 35
+  const waveFrequency = 23.5
     
 
   return (
     <>
       <Box
+        className="stars"
         position="relative"
         width="100%"
         height="100vh"
-        // backgroundColor="black"
+        backgroundColor="black"
+        display="flex"
+        overflow="hidden" // No overflow stars. Need to make sure its mobile friendly
+        justifyContent="right"
       >
+        <Box
+          className="twinkling"
+          position="absolute"
+          width="10000px"
+          height="100%"
+          backgroundImage="url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/twinkling.png')"
+          backgroundRepeat="repeat"
+          backgroundSize="1000px 1000px"
+          animation="move-background 70s linear infinite"
+        />
         <IconButton
-          aria-label="upload profile image"
+          aria-label="view profile info"
           icon={<CgProfile />}
-          isRound
           onClick={handleSubmit}
+          zIndex="3"
+          marginTop=".5rem"
+          maxW="1.5rem"
+          _hover={{
+            transform: "scale(1.05)",
+          }}
+        />
+        <IconButton
+          aria-label="logout button"
+          icon={<IoIosLogOut />}
+          onClick={handleLogout}
+          zIndex="3"
+          margin=".5rem"
+          maxW="1.5rem"
+          _hover={{
+            transform: "scale(1.05)",
+          }}
         />
         {planets.map((planet, index) => (
           <Box
             key={planet.id}
             position="absolute"
-            top={`${index * 20 + 10}%`}
-            left={`${index * 10 + 10}%`}
+            top={`${40 + waveAmplitude * Math.sin(waveFrequency * index)}%`}
+            left={`${8 + index * 12}%`}
             transform="translate(-50%, -50%)"
+            zIndex="3"
           >
             <Button
-              onClick={() => handlePlanetClick(planet.gameRoute)}
-              variant="outlined"
+              onClick={() => handlePlanetClick(planet)}
+              variant="unstyled"
               boxShadow="none"
+              border="none"
               bg="none"
-              color="black"
+              _hover={{
+                transform: "scale(1.15)",
+                boxShadow: "none", // Ensuring no shadow on hover
+                borderColor: "purple",
+              }}
+              _focus={{
+                boxShadow: "none", // Ensuring no shadow on focus
+              }}
+              _active={{
+                boxShadow: "none", // Ensuring no shadow when active (clicked)
+              }}
+              transition="transform 0.2s"
             >
-              <Image
-                src={planet.image}
-                alt={planet.name}
-                boxSize="200px"
-                borderRadius="10%"
-              />
+              <Image src={planet.image} alt={planet.name} boxSize="190px" />
             </Button>
             {index < planets.length - 1 && (
               <Box
@@ -142,19 +202,11 @@ const GamePage = () => {
                 height="2px"
                 top="50%"
                 left="50%"
-                transform="translateX(-50%) translateY(-50%)"
               />
             )}
           </Box>
         ))}
       </Box>
-      
-      <IconButton
-        aria-label="navigate tp profile"
-        icon={<CgProfile />}
-        isRound
-        onClick={handleSubmit}
-      />
     </>
   );
 };

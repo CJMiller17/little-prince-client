@@ -12,10 +12,10 @@ import {
   ModalBody,
   ModalCloseButton,
   IconButton,
-  SimpleGrid
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { IoHome } from "react-icons/io5";
-import "./Conceited.css";
+import "./Geographer.css";
 import { Link } from "react-router-dom";
 
 const Home = ({ onGame }) => {
@@ -31,7 +31,7 @@ const Home = ({ onGame }) => {
         fontFamily="Amatic SC"
         mt="-3rem"
       >
-        The Conceited Man
+        The Geographer
       </Heading>
       <Text
         textShadow="0 10px 10px #000"
@@ -39,14 +39,10 @@ const Home = ({ onGame }) => {
         textAlign="center"
         color="white"
       >
-        Asteroid 326
+        Asteroid 330
       </Text>
       <Stack display="flex" alignItems="center">
-        <Button
-          variant="solid"
-          mt="3rem"
-          onClick={() => onGame("playGame")}
-        >
+        <Button variant="solid" mt="3rem" onClick={() => onGame("playGame")}>
           Play Game
         </Button>
         <SimpleGrid
@@ -55,12 +51,7 @@ const Home = ({ onGame }) => {
           justifyContent="center"
           spacing="3"
         >
-          <Button
-            variant="solid"
-            onClick={onOpen}
-            maxW="3.9rem"
-            size="xs"
-          >
+          <Button variant="solid" onClick={onOpen} maxW="3.9rem" size="xs">
             Rules
           </Button>
           <IconButton
@@ -85,7 +76,6 @@ const Home = ({ onGame }) => {
 
 export default Home;
 
-
 const RulesModal = ({ isOpen, onClose }) => {
   return (
     <>
@@ -93,13 +83,18 @@ const RulesModal = ({ isOpen, onClose }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontSize="3xl" textAlign="center" color="#3C6286">
-            Conceited Man Gameplay Rules
+            Geographer Gameplay Rules
           </ModalHeader>
           <ModalBody color="#3C6286">
             The Little Prince landed on a planet where the only inhabitant is a
-            <em>VERY</em> conceited man who always needs to be complimented. The Little Prince is having a hard
-            time complimenting him quick enough. It is up to you to <em><strong>TYPE FAST</strong></em> all the
-            compliments the conceited man expects in order to help the Little Prince move onto the next planet.
+            geographer who has never traveled or explored. The
+            Little Prince is having a hard time piecing together a map to show the geographer his own planet.
+            It is up to you to{" "}
+            <em>
+              <strong>SLIDE</strong>
+            </em>{" "}
+            all the map pieces together correctly in order to help the
+            Little Prince move onto the next planet.
           </ModalBody>
           <ModalFooter alignSelf="center">
             <Button
@@ -114,4 +109,4 @@ const RulesModal = ({ isOpen, onClose }) => {
       </Modal>
     </>
   );
-}
+};

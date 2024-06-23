@@ -312,7 +312,6 @@ const PlayGameDrunkard = ({onChangeScore, score, timeLeft, cssEffects, setCSSEff
           fontSize="1.9rem"
         />
         <Button
-          colorScheme="customDarkBlue"
           onClick={handleCheckWord}
           display="flex"
           className="check-word"
