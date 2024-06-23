@@ -260,7 +260,7 @@ const PlayGameDrunkard = ({onChangeScore, score, timeLeft, cssEffects, setCSSEff
   }
 
   return (
-    <Container maxW="md">
+    <Container maxW="md" color="white">
       <Box className="container-drunkard" maxW="100%">
         <Box className="display-drunkard" p="1rem" borderRadius="xl">
           <Heading
@@ -299,28 +299,30 @@ const PlayGameDrunkard = ({onChangeScore, score, timeLeft, cssEffects, setCSSEff
             Score: {score.total}
           </Text>
         </SimpleGrid>
-        <Input
-          type="text"
-          spellCheck="false"
-          placeholder="Enter a valid word"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          // maxLength={currentWord.length}
-          onKeyDown={handleKeyDown}
-          borderRadius="xl"
-          color="white"
-          fontSize="1.9rem"
-        />
-        <Button
-          onClick={handleCheckWord}
-          display="flex"
-          className="check-word"
-          fontSize="xl"
-          _hover={{ bgColor: "gray" }}
-          _active={{ color: "#FBD154" }}
-        >
-          Check Word
-        </Button>
+        <SimpleGrid spacing="2" display="flex" justifyContent="center">
+          <Input
+            type="text"
+            spellCheck="false"
+            placeholder="Enter a valid word"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            focusBorderColor="#6C6381"
+            onKeyDown={handleKeyDown}
+            borderRadius="xl"
+            color="white"
+            fontSize="1.9rem"
+          />
+          <Button
+            onClick={handleCheckWord}
+            display="flex"
+            className="check-word"
+            fontSize="xl"
+            _hover={{ bgColor: "gray" }}
+            _active={{ color: "#FBD154" }}
+          >
+            Check Word
+          </Button>
+        </SimpleGrid>
       </Box>
     </Container>
   );

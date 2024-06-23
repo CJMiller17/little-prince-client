@@ -7,59 +7,79 @@ import { useEffect, useState } from "react"
 
 
 function ConceitedApp() {
-    const [statusGame, setStatusGame] = useState(null)
-    const [score, setScore] = useState(null)
+  const [statusGame, setStatusGame] = useState(null);
+  const [score, setScore] = useState({});
+  const [timeLeft, setTimeLeft] = useState(60); //For clock purposes
 
-    useEffect(() => {
-        if (statusGame === "playGame") {
-            setScore({
-                right: 0,
-                wrong: 0
-            })
-            const timeOutGame = setTimeout(() => {
-               setStatusGame("endGame")
-            }, 60000)
-           return () => clearTimeout(timeOutGame) 
-        }
-    }, [statusGame])
+  useEffect(() => {
+    if (statusGame === "playGame") {
+      setScore({
+        right: 0,
+        wrong: 0,
+      });
+        
+      const timeOutGame = setTimeout(() => {
+        setStatusGame("endGame");
+      }, 60000);
+        // return () => clearTimeout(timeOutGame);
+        
+      const intervalTimer = setInterval(() => {
+        setTimeLeft((prevTimeLeft) => {
+          if (prevTimeLeft <= 1) {
+            clearInterval(intervalTimer);
+            return 0;
+          }
+          return prevTimeLeft - 1;
+        });
+      }, 1000); // Decrementing clock feature by 1 second every second
 
-    const handleChangeStatus = (status) => {
-        setStatusGame(status)
+      return () => {
+        clearTimeout(timeOutGame);
+        clearInterval(intervalTimer);
+      }
     }
-
-    const handleChangeScore = (type) => {
-        if (type === "right") {
-            setScore({
-                ...score,
-                right: score.right +1
-            })
-        } else {
-            setScore({
-                ...score,
-                wrong: score.wrong + 1
-            })
-        }
-    } 
-
-    let layout
+  }, [statusGame]);
     
-    switch (statusGame) {
-        case "playGame":
-            layout = <PlayGame onChangeScore={handleChangeScore}/>
-            break
-        case "endGame":
-            layout = <EndGame score={score} onGame={handleChangeStatus}/>
-            break
-        default:
-            layout = <Home onGame={handleChangeStatus} />
-            break
+
+  const handleChangeStatus = (status) => {
+    setStatusGame(status);
+  };
+
+  const handleChangeScore = (type) => {
+    if (type === "right") {
+      setScore({
+        ...score,
+        right: score.right + 1,
+      });
+    } else {
+      setScore({
+        ...score,
+        wrong: score.wrong + 1,
+      });
     }
-    
-    return (
-        <div className="App">
-            { layout }
-        </div>
-    )
+  };
+
+  let layout;
+
+  switch (statusGame) {
+    case "playGame":
+      layout = (
+          <PlayGame
+          onChangeScore={handleChangeScore}
+          score={score}
+          timeLeft={timeLeft}
+        />
+      );
+      break;
+    case "endGame":
+      layout = <EndGame score={score} onGame={handleChangeStatus} />;
+      break;
+    default:
+      layout = <Home onGame={handleChangeStatus} />;
+      break;
+  }
+
+  return <div className="App">{layout}</div>;
 }
 
 export default ConceitedApp

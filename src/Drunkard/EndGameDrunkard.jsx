@@ -61,7 +61,7 @@ const EndGame = ({ score, onGame }) => {
       alignItems="center"
       // onLoad={handleUpdateDrunkardScore}
     >
-      <SimpleGrid columns={1} spacing="3rem" mb="3rem">
+      <SimpleGrid columns={1} spacing="3rem" mb="3rem" color="white">
         <div>
           <Heading
             textDecoration="underline"

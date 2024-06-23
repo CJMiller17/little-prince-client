@@ -581,6 +581,7 @@ const Form3 = ({
               onChange={handleInputChange}
               value={formData.password}
               focusBorderColor="#6C6381"
+              fontFamily="Shadows Into Light Two"
               autoComplete="new-password"
               sx={{
                 "::placeholder": {
@@ -620,6 +621,7 @@ const Form3 = ({
               onChange={handleConfirmPasswordChange}
               value={confirmPassword}
               focusBorderColor="#6C6381"
+              fontFamily="Shadows Into Light Two"
               autoComplete="new-password"
               sx={{
                 "::placeholder": {
