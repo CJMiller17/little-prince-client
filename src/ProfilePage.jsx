@@ -144,7 +144,7 @@ export default function ProfilePage({ username, name, avatar }) {
           </Badge>
         </Stack>
 
-        <ButtonGroup spacing="4" colorScheme="customDarkBlue">
+        <ButtonGroup spacing="4">
           <IconButton
             flex={1}
             alignSelf={"center"}

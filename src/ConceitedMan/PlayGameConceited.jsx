@@ -230,7 +230,8 @@ const PlayGame = ({ onChangeScore }) => {
         <Box display="flex" justifyContent="center">
           <Input
             type="text"
-            textAlign="center"
+            textAlign="start"
+            paddingLeft="1rem"
             borderRadius="xl"
             focusBorderColor="#6C6381"
             maxW="25rem"

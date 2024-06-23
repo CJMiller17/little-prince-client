@@ -29,13 +29,13 @@ const App = () => {
   const changeDifficulty = (newSize) => {
     setSize(newSize);
     // Load images based on the selected size
-    const imagesPath = `src/Geographer/images/${newSize}x${newSize}/map`;
+    const imagesPath = `src/public/images/${newSize}x${newSize}/map`; // src/public/assets/images/3x3/map
     const imagesArray = Array.from(
       { length: newSize * newSize },
       (_, index) => `${imagesPath}/${index + 1}.png`
     );
     setImages(imagesArray);
-    setIsSolved(false); 
+    setIsSolved(false);
   };
 
   useEffect(() => {

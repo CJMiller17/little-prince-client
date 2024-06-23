@@ -39,7 +39,6 @@ const Home = ({ onGame }) => {
         <Button
           mt="3rem"
           onClick={() => onGame("playGame")}
-          colorScheme="customDarkBlue"
           _hover={{ bgColor: "gray" }}
           _active={{ color: "#FBD154" }}
         >
@@ -53,7 +52,6 @@ const Home = ({ onGame }) => {
         >
           <Button
             margin="0"
-            colorScheme="customDarkBlue"
             onClick={onOpen}
             _hover={{ bgColor: "gray" }}
             _active={{ color: "#FBD154" }}
@@ -66,7 +64,6 @@ const Home = ({ onGame }) => {
             maxW="1.5rem"
             p=".2rem"
             alignSelf="center"
-            colorScheme="customDarkBlue"
             _hover={{ bgColor: "gray" }}
             _active={{ color: "#FBD154" }}
             aria-label="home button"
@@ -105,7 +102,6 @@ const RulesModal = ({ isOpen, onClose }) => {
 
           <ModalFooter alignSelf="center">
             <Button
-              colorScheme="customDarkBlue"
               onClick={onClose}
               _hover={{ bgColor: "#82B0E1" }}
               _active={{ color: "#FBD154" }}

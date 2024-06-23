@@ -10,28 +10,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-<<<<<<< HEAD
-    color: #eeee;
-}
-=======
 }
 
 .home .title {
     font-size: 80px;
     text-shadow: 0 10px 10px #000;
 }
-
-/* .btnPlay {
-    display: block;
-    margin: 20px auto;
-    background-color: #191a21;
-    color: #eee;
-    padding: 5px 10px;
-    font-size: large;
-    letter-spacing: 5px;
-    box-shadow: 0 10px 10px #0005;
-} */
->>>>>>> main
 
 @keyframes showHome {
     to{

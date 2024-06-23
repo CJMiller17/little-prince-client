@@ -56,7 +56,6 @@ const EndGame = ({ score, onGame}) => {
           spacing="3"
         >
           <Button
-            colorScheme="customDarkBlue"
             onClick={() => onGame("playGame")}
             _hover={{ bgColor: "gray" }}
             _active={{ color: "#FBD154" }}
@@ -68,7 +67,6 @@ const EndGame = ({ score, onGame}) => {
             maxW="1.5rem"
             p=".2rem"
             alignSelf="center"
-            colorScheme="customDarkBlue"
             _hover={{ bgColor: "gray" }}
             _active={{ color: "#FBD154" }}
             aria-label="home button"

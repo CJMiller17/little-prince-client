@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   Progress,
   Box,
@@ -40,14 +40,13 @@ export default function Multistep() {
   const [sound, setSound] = useState("");
 
 
-
   //State for the form data
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     name: "",
     avatar: null,
-    butterflies: "no",
+    butterflies: "",
     elephants: 0,
     games: "",
     color: "",
@@ -68,7 +67,15 @@ export default function Multistep() {
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
-    const parsedValue = value === 'yes' || value === 'no' ? value === 'yes' : value
+    let parsedValue = value === 'yes' || value === 'no' ? value === 'yes' : value
+    
+    const insensitiveUsername = (username) => {
+      return username.toLowerCase(); // Convert username to lowercase
+    }
+
+    if (name === "username") {
+      parsedValue = insensitiveUsername(value);
+    }
     
     if (name === "sound" && value.trim() !== "") {
       setSound(parsedValue)
@@ -96,39 +103,50 @@ export default function Multistep() {
     console.log("Password: ", confirmPassword)
   };
 
+  const isFormValid = () => {
+    return (
+      formData.sound !== "" &&
+      formData.butterflies !== "" &&
+      formData.elephants !== "" &&
+      formData.color !== "" &&
+      formData.bestFriend !== "" &&
+      formData.name !== "" &&
+      formData.username !== "" &&
+      formData.password !== "" &&
+      confirmPassword !== ""
+    );
+  };
+
   const handleSubmit = () => {
     console.log("Form Data: ", formData);
-    if (formData.password !== confirmPassword) {
+    
+    const notify = (toastAPICall) => {
       toast({
+        duration: 3000,
+        isClosable: false,
+        ...toastAPICall,
+      })
+    }
+    if (formData.password !== confirmPassword) {
+      notify({
         title: "Password Mismatch",
         description: "Passwords do not match. Please try again.",
         status: "error",
-        duration: 3000,
-        isClosable: true,
+      });
+      return
+    } 
+    if (!isFormValid()) {
+      notify({
+        title: "Missing Information",
+        description: "The form isn't complete.",
+        status: "error",
       });
       return
     }
-    createUser(formData);
-    toast({
-      //Maybe change this depending on backend response?
-      title: "Account Created Successfully",
-      description: "You're account has been created successfully!",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+
+    createUser(formData, notify);
     navigate("/login");
   }
-
-  // useEffect(() => {
-  //   // Prevent scrolling
-  //   document.body.style.overflow = "hidden";
-
-  //   // Cleanup function to reset the overflow property
-  //   return () => {
-  //     document.body.style.overflow = "auto";
-  //   };
-  // }, []);
 
   return (
     <>
@@ -139,23 +157,6 @@ export default function Multistep() {
           boxShadow="dark-lg"
           p={6}
           as="form"
-          overflowY={step === 3 ? "auto" : "hidden"}
-          css={{
-            scrollbarWidth: "thin",
-            scrollbarColor: "#82B0E1 #C0B1BE",
-            "&::-webkit-scrollbar": {
-              width: "8px",
-            },
-            "&::-webkit-scrollbar-track": {
-              background: "#C0B1BE",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: "#82B0E1",
-              borderRadius: "20px",
-              border: "3px solid #C0B1BE",
-            },
-            overscrollBehavior: step === 3 ? "auto" : "contain",
-          }}
         >
           <Progress
             hasStripe
@@ -166,7 +167,7 @@ export default function Multistep() {
             isAnimated
             id="smooth-progress"
             sx={{
-              "& > div:first-child": {
+              "& > div:first-of-type": {
                 transitionProperty: "width",
                 transitionDuration: "1s",
               },
@@ -186,47 +187,36 @@ export default function Multistep() {
               confirmPassword={confirmPassword}
             />
           )}
-          <ButtonGroup mt="5%" w="100%" colorScheme="customDarkBlue">
+          <ButtonGroup mt="5%">
             <Flex w="100%" justifyContent="space-between">
               <Flex>
                 {step === 1 ? (
                   <Button
+                    variant="solid"
+                    as={Link}
+                    to="/"
                     onClick={() => {
                       setStep(step - 1);
                       setProgress(0); // progress - 33.33
                     }}
-                    variant="solid"
-                    w="7rem"
-                    as={Link}
-                    to="/"
-                    m="10px 0px"
                     mr="10px"
-                    p="10px 0px"
-                    boxShadow="0 10px 10px #0005"
-                    _hover={{ bgColor: "gray" }}
-                    _active={{ color: "#FBD154" }}
                   >
                     Home
                   </Button>
                 ) : (
                   <Button
+                    variant="solid"
                     onClick={() => {
                       setStep(step - 1);
                       setProgress(progress - 33.33); // (step -2 ) * 33.33
                     }}
-                    variant="solid"
-                    w="7rem"
-                    m="10px 0px"
                     mr="10px"
-                    p="10px 0px"
-                    _hover={{ bgColor: "gray" }}
-                    _active={{ color: "#FBD154" }}
                   >
                     Back
                   </Button>
                 )}
                 <Button
-                  w="7rem"
+                  variant="outline"
                   isDisabled={step === 3}
                   onClick={() => {
                     setStep(step + 1);
@@ -236,24 +226,18 @@ export default function Multistep() {
                       setProgress(progress + 33.33); // step * 33.33
                     }
                   }}
-                  variant="outline"
-                  color="#3C6286"
-                  _hover={{ bgColor: "#B8D4E6" }}
-                  _active={{ color: "#FBD154" }}
-                  m="10px 0px"
-                  p="10px 0px"
                 >
                   Next
                 </Button>
               </Flex>
               {step === 3 ? (
                 <Button
-                  w="7rem"
-                  colorScheme="customMaroon"
-                  _hover={{ bgColor: "#C67E63" }}
-                  _active={{ color: "#FBD154" }}
                   variant="solid"
+                  bgColor="#A3646D"
                   onClick={handleSubmit}
+                  _hover= {
+                    {bgColor: "#C7834A"}
+                  }
                 >
                   Submit
                 </Button>
@@ -298,18 +282,14 @@ const Form1 = ({ formData, handleInputChange, sound }) => {
             id="sound"
             name="sound"
             value={sound}
+            focusBorderColor="#6C6381"
             placeholder="ex. Splashing, giggling, etc..."
             sx={{
               "::placeholder": {
-                color: "#82B0E1",
+                color: "#C0B1BE",
               },
             }}
-            color="#82B0E1"
-            focusBorderColor="#6C6381"
             onChange={handleInputChange}
-            boxShadow={"sm"}
-            size={"xl"}
-            borderRadius={"xl"}
           />
         </FormControl>
 
@@ -324,18 +304,19 @@ const Form1 = ({ formData, handleInputChange, sound }) => {
           </FormLabel>
           <Select
             id="butterflies"
+            height="2.5rem"
             name="butterflies"
             placeholder="Let me think..."
             focusBorderColor="#6C6381"
-            shadow="sm"
-            sx={{ color: "#82B0E1" }}
-            size="md"
-            w="full"
+            boxShadow="md"
+            sx={{ color: "#C0B1BE" }}
+            size="sm"
+            fontSize="1.5rem"
+            borderRadius="lg"
             rounded="md"
             onChange={handleInputChange}
             value={formData.butterflies}
             m={"10px 0px"}
-            p={"10px 0px"}
           >
             <option value="true">Yes I do!</option>
             <option value="false">No, not really...</option>
@@ -377,14 +358,15 @@ const Form2 = ({formData, handleInputChange}) => {
           <Input
             id="color"
             name="color"
-            placeholder="ex. auburn, fuchsia, flaxen..."
-            maxW="11rem"
+            placeholder="ex. plum, sage, flaxen..."
             onChange={handleInputChange}
             value={formData.color}
-            color="#82B0E1"
             focusBorderColor="#6C6381"
-            borderRadius="xl"
-            size="xl"
+            sx={{
+              "::placeholder": {
+                color: "#C0B1BE",
+              },
+            }}
           />
         </FormControl>
 
@@ -404,15 +386,25 @@ const Form2 = ({formData, handleInputChange}) => {
                 id="elephants"
                 name="elephants"
                 min={0}
+                color="#82B0E1"
+                shadow="md"
                 onChange={handleInputChange}
                 value={formData.elephants}
-                color="#82B0E1"
-                focusBorderColor="#6C6381"
-                borderRadius="xl"
-                size="xl"
                 placeholder="Ex. 42"
-                textAlign="center"
+                textAlign="start"
+                fontSize="2xl"
+                borderRadius="lg"
                 padding=".5rem"
+                focusBorderColor="red"
+                sx={{
+                  "::placeholder": {
+                    color: "#C0B1BE",
+                  },
+                  ":focus": {
+                    borderColor: "#6C6381", 
+                    boxShadow: "0 0 0 1px #6C6381",
+                  },
+                }}
               />
             </NumberInput>
           </SimpleGrid>
@@ -425,23 +417,28 @@ const Form2 = ({formData, handleInputChange}) => {
         </FormLabel>
         <Textarea
           placeholder="ex. They make me feel..."
-          rows={3}
-          shadow="sm"
+          rows={2}
+          shadow="md"
           fontSize="1.5rem"
           onChange={handleInputChange}
           value={formData.bestFriend}
           color="#82B0E1"
           focusBorderColor="#6C6381"
-          borderRadius="xl"
+          borderRadius="lg"
+          textAlign="start"
+          paddingLeft="1rem"
           size="xl"
+          sx={{
+            "::placeholder": {
+              color: "#C0B1BE",
+            },
+          }}
         />
         <FormHelperText></FormHelperText>
       </FormControl>
     </>
   );
 };
-
-
 
 
 const Form3 = ({
@@ -491,14 +488,14 @@ const Form3 = ({
             name="name"
             width="12rem"
             placeholder="Enter your first name"
-            textAlign="start"
             onChange={handleInputChange}
             value={formData.name}
-            color="#82B0E1"
             focusBorderColor="#6C6381"
-            borderRadius="xl"
-            size="xl"
-            marginRight="2"
+            sx={{
+              "::placeholder": {
+                color: "#C0B1BE",
+              },
+            }}
           />
         </Box>
         <Box
@@ -532,7 +529,7 @@ const Form3 = ({
             </Text>
           )}
           {!imageUploaded && (
-            <FormHelperText fontSize="xs" as="sup" marginTop="1">
+            <FormHelperText fontSize="xs" as="sup" marginTop="1" marginLeft="4">
               Upload a profile image
             </FormHelperText>
           )}
@@ -542,7 +539,7 @@ const Form3 = ({
       <FormControl mr="5%">
         <FormLabel
           htmlFor="username"
-          fontWeight={"xl"}
+          fontWeight="xl"
           fontSize="1.4rem"
           color="#3C6286"
         >
@@ -553,13 +550,15 @@ const Form3 = ({
           name="username"
           placeholder="Create a unique username"
           maxW="25rem"
-          textAlign="start"
           onChange={handleInputChange}
           value={formData.username}
-          color="#82B0E1"
           focusBorderColor="#6C6381"
-          borderRadius="xl"
-          size="xl"
+          autoComplete="username"
+          sx={{
+            "::placeholder": {
+              color: "#C0B1BE",
+            },
+          }}
         />
       </FormControl>
 
@@ -573,23 +572,24 @@ const Form3 = ({
           >
             Password:
           </FormLabel>
-          <InputGroup size="md">
+          <InputGroup>
             <Input
-              pr="4.5rem"
+              // pr="4.5rem"
               name="password"
               type={show ? "text" : "password"}
-              placeholder="Enter password"
+              placeholder="Create Password"
               onChange={handleInputChange}
               value={formData.password}
-              color="#82B0E1"
               focusBorderColor="#6C6381"
-              borderRadius="xl"
-              size="xl"
-              fontSize="1.2rem"
+              autoComplete="new-password"
+              sx={{
+                "::placeholder": {
+                  color: "#C0B1BE",
+                },
+              }}
             />
             <InputRightElement>
               <IconButton
-                variant="link"
                 color="#82B0E1"
                 aria-label={show ? "Mask password" : "Reveal password"}
                 bg="none"
@@ -597,7 +597,6 @@ const Form3 = ({
                 icon={show ? <HiEyeOff /> : <HiEye />}
                 onClick={handleClick}
                 _hover={{ color: "gray", bg: "none" }}
-                mt="1.5rem"
               />
             </InputRightElement>
           </InputGroup>
@@ -613,19 +612,20 @@ const Form3 = ({
           >
             Confirm Password:
           </FormLabel>
-          <InputGroup size="md">
+          <InputGroup>
             <Input
-              pr="4.5rem"
               name="confirmPassword"
               type={show ? "text" : "password"}
               placeholder="Confirm password" // I need to make a check where the two passwords are identical.
-              color="#82B0E1"
-              focusBorderColor="#6C6381"
-              borderRadius="xl"
-              size="xl"
-              fontSize="1.2rem"
               onChange={handleConfirmPasswordChange}
               value={confirmPassword}
+              focusBorderColor="#6C6381"
+              autoComplete="new-password"
+              sx={{
+                "::placeholder": {
+                  color: "#C0B1BE",
+                },
+              }}
             />
           </InputGroup>
         </FormControl>

@@ -7,7 +7,7 @@
     height: 600px; 
     margin: auto;
     border: 2px solid #000;
-    background: radial-gradient(#82B0E1, #3C6286);
+    background: radial-gradient(#C7834A, #A3646D);
     box-shadow: 0 10px 10px #0005;
 }
 
@@ -48,22 +48,4 @@
 
 .controls {
     margin-bottom: 20px;
-}
-
-button {
-    display: block;
-    margin: 10px auto;
-    background-color: #191a21;
-    color: #eee;
-    padding: 10px 20px;
-    font-size: large;
-    letter-spacing: 5px;
-    box-shadow: 0 10px 10px #0005;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #333;
 }

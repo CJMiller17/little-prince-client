@@ -1,14 +1,6 @@
 import axios from "axios";
-import { AuthContext } from "./ContextProvider";
-import React, {useContext} from "react";
-
-// const baseURL = "http://127.0.0.1:8000";
-// const baseURL = "http://127.0.0.1:8000";
 export const baseURL = import.meta.env.VITE_BASE_URL
-// export con
-console.log("baseURL:", baseURL)
-
-// const { auth, profile } = useContext(AuthContext);
+// const baseURL = "http://127.0.0.1:8000";
 
 
 // GET TOKEN
@@ -27,7 +19,7 @@ export const getToken = ({ username, password }) => {
 
 
 // CREATE
-export const createUser = ({ username, password, name, avatar, butterflies, elephants, color, scorePrince, scoreKing, scoreConceited, scoreDrunkard, scoreBusiness, scoreLamplighter, scoreGeographer, scoreEarth }) => {
+export const createUser = ({ username, password, name, avatar, butterflies, elephants, color, scorePrince, scoreKing, scoreConceited, scoreDrunkard, scoreBusiness, scoreLamplighter, scoreGeographer, scoreEarth }, notify) => {
   axios
     .post(
       `${baseURL}/profiles/create/`,
@@ -56,9 +48,21 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
     )
     .then((response) => {
       console.log("User Created: ", response);
+      notify({
+        //Maybe change this depending on backend response?
+        title: "Account Created Successfully",
+        description: "You're account has been created successfully!",
+        status: "success",
+      });
     })
     .catch((error) => {
       console.log("Creation Error: ", error);
+      notify({
+        //Maybe change this depending on backend response?
+        title: "Account Not Created",
+        description: "Something went wrong. Please try again",
+        status: "error",
+      });
     });
 };
 
