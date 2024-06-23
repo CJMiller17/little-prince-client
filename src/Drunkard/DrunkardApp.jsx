@@ -21,7 +21,7 @@ function DrunkardApp() {
 
             const timeOutGame = setTimeout(() => {
                setStatusGame("endGame")
-            }, 30000) // Time of how long a game lasts
+            }, 60000) // Time of how long a game lasts
 
             const intervalTimer = setInterval(() => {
                 setTimeLeft((prevTimeLeft) => {

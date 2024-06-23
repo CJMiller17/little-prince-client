@@ -200,7 +200,7 @@ const PlayGame = ({ onChangeScore }) => {
     console.log(dataTyping)
 
     return (
-      <Box className="playing-conceited" maxW="30rem">
+      <Box className="playing-conceited" maxW="30rem" color="white">
         <UnorderedList
           className="list"
           borderRadius="xl"
@@ -230,16 +230,10 @@ const PlayGame = ({ onChangeScore }) => {
         <Box display="flex" justifyContent="center">
           <Input
             type="text"
-            textAlign="start"
-            paddingLeft="1rem"
-            borderRadius="xl"
             focusBorderColor="#6C6381"
-            maxW="25rem"
             onChange={handleChangeTyping}
             value={textTyping.value}
             color="white"
-            size="xl"
-            fontSize="1.5rem"
           />
         </Box>
       </Box>

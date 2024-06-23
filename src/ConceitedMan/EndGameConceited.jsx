@@ -12,19 +12,17 @@ const EndGame = ({ score, onGame}) => {
         flexDirection="column"
         alignItems="center"
       >
-        <SimpleGrid columns={2} spacing="3rem" mb="3rem">
+        <SimpleGrid columns={2} spacing="3rem" mb="3rem" color="white" textAlign="center">
           <div>
             <Heading
               textDecoration="underline"
-              size="2xl"
-              textAlign="center"
               fontFamily="Amatic SC"
+              size="2xl"
               style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
             >
               Right Word
             </Heading>
             <Text
-              textAlign="center"
               fontSize="5rem"
               textShadow="2px 2px 4px rgba(0,0,0,0.5)"
             >
@@ -41,7 +39,6 @@ const EndGame = ({ score, onGame}) => {
               Wrong Word
             </Heading>
             <Text
-              textAlign="center"
               fontSize="5rem"
               textShadow="2px 2px 4px rgba(0,0,0,0.5)"
             >
@@ -56,9 +53,8 @@ const EndGame = ({ score, onGame}) => {
           spacing="3"
         >
           <Button
+            variant="solid"
             onClick={() => onGame("playGame")}
-            _hover={{ bgColor: "gray" }}
-            _active={{ color: "#FBD154" }}
           >
             Play Again
           </Button>
@@ -73,7 +69,7 @@ const EndGame = ({ score, onGame}) => {
             icon={<IoHome />}
             as={Link}
             to="/gamepage"
-            boxShadow="0 10px 10px #0005"
+            boxShadow="0 10px 10px #0003"
           />
         </SimpleGrid>
       </Box>

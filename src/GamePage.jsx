@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
+import { IoIosLogOut } from "react-icons/io";
 import { getCurrentUserProfile } from "./apis";
 import { AuthContext } from "./ContextProvider";
 import Rose from "./public/assets/princes_planet.png"
@@ -98,6 +99,10 @@ const GamePage = () => {
       navigate("/profile");
     }
   
+  const handleLogout = () => {
+    navigate("/");
+  };
+  
   const handlePlanetClick = (planet) => {
     if (planet.locked) {
       toast({
@@ -139,10 +144,26 @@ const GamePage = () => {
           animation="move-background 70s linear infinite"
         />
         <IconButton
-          aria-label="upload mom image"
+          aria-label="view profile info"
           icon={<CgProfile />}
           onClick={handleSubmit}
           zIndex="3"
+          marginTop=".5rem"
+          maxW="1.5rem"
+          _hover={{
+            transform: "scale(1.05)",
+          }}
+        />
+        <IconButton
+          aria-label="logout button"
+          icon={<IoIosLogOut />}
+          onClick={handleLogout}
+          zIndex="3"
+          margin=".5rem"
+          maxW="1.5rem"
+          _hover={{
+            transform: "scale(1.05)",
+          }}
         />
         {planets.map((planet, index) => (
           <Box

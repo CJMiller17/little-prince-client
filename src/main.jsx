@@ -28,6 +28,7 @@ import DrunkardApp from './Drunkard/DrunkardApp.jsx';
 import GeographerApp from './Geographer/GeographyApp.jsx';
 import ProfilePage from './ProfilePage.jsx'
 import GamePage from './GamePage.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 function Layout() {
   return (
@@ -60,6 +61,7 @@ const customTheme = extendTheme({
           },
           _active: {
             color: "#FBD154",
+            bgColor:"gray"
           },
         },
         outline: {
@@ -127,15 +129,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/lamplighter",
-        element: <LampApp />,
+        element: (
+          <ProtectedRoute>
+            <LampApp />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/conceited",
-        element: <ConceitedApp />,
+        element: (
+          <ProtectedRoute>
+            <ConceitedApp />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/drunkard",
-        element: <DrunkardApp />,
+        element: (
+          <ProtectedRoute>
+            <DrunkardApp />
+          </ProtectedRoute>
+        ),
       },
       {
         // path: "/business",
@@ -143,15 +157,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/geographer",
-        element: <GeographerApp />,
+        element: (
+          <ProtectedRoute>
+            <GeographerApp />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/gamepage",
-        element: <GamePage />,
+        element: (
+          <ProtectedRoute>
+            <GamePage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

@@ -18,7 +18,7 @@ function ConceitedApp() {
             })
             const timeOutGame = setTimeout(() => {
                setStatusGame("endGame")
-            }, 6000)
+            }, 60000)
            return () => clearTimeout(timeOutGame) 
         }
     }, [statusGame])
