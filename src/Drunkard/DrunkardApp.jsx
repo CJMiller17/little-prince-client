@@ -52,15 +52,15 @@ function DrunkardApp() {
         if (type === "right") {
             setScore({
                 ...score,
-                right: score.right + 1,
-                total: score.total + 1
+                right: score.right + 10,
+                total: score.total + 10
             })
             setCSSEffects("correct")
         } else if (type === "wrong") {
             setScore({
               ...score,
-              wrong: score.wrong + 1,
-              total: score.total - 1,
+              wrong: score.wrong + 6,
+              total: score.total - 6,
             });
             setCSSEffects("incorrect")
         } else {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./Drunkard.css"
-import { Button, Box, Container, Heading, Input, Text, SimpleGrid } from "@chakra-ui/react";
+import { Button, Box, Container, Heading, Input, Text, SimpleGrid, Stack } from "@chakra-ui/react";
 import { AuthContext } from "../ContextProvider";
 import words from "./words";
 
@@ -96,19 +96,27 @@ const PlayGameDrunkard = ({onChangeScore, score, timeLeft, cssEffects, setCSSEff
           justifyContent="space-around"
           mb=".7rem"
         >
-          <Box textShadow="0 2px 2px #0009">Time Left:{timeLeft}</Box>
-          <Text
+          <Box
             textShadow="0 2px 2px #0009"
-            className={`score ${
-              cssEffects === "correct"
-                ? "correct"
-                : cssEffects === "incorrect"
-                ? "incorrect"
-                : ""
-            }`}
+            color={timeLeft <= 10 ? "red" : "inherit"}
+            fontWeight={timeLeft <= 10 ? "bold" : "inherit"}
           >
-            Score: {score.total}
-          </Text>
+            Time Left:{timeLeft}
+          </Box>
+          <Stack className="score">
+            <Text
+              textShadow="0 2px 2px #0009"
+              className={
+                cssEffects === "correct"
+                  ? "correct"
+                  : cssEffects === "incorrect"
+                  ? "incorrect"
+                  : ""
+              }
+            >
+              Score: {score.total}
+            </Text>
+          </Stack>
         </SimpleGrid>
         <SimpleGrid spacing="2" display="flex" justifyContent="center">
           <Input

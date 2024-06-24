@@ -18,23 +18,29 @@
 
 .score {
     position: relative;
-    display: inline-block;
 }
 
-.score.correct {
+.score p {
+    position: relative;
+}
+
+.score p.correct {
     color: green;
 }
 
-.score.incorrect {
+.score p.incorrect {
     color: red;
 }
 
-.score::after {
+.score p.correct::after,
+.score p.incorrect::after{
     position: absolute;
-    top: -20px; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    content: attr(data-value); /* Dynamically set content */
+    inset: 0 0 0 0;
+    content: "+1";
     text-align: center;
-    animation: showPoint 1s linear 1 forwards;
+    animation: showPoint .7s linear 1 forwards;
+}
+
+.score p.incorrect::after {
+    content: "-1";
 }

@@ -104,7 +104,8 @@ const RulesModal = ({ isOpen, onClose }) => {
             his words in order to help the Little Prince move onto the next
             planet.
             <Text fontSize="md" color="#C67E63" mt=".5rem">
-              Note: You CAN get a negative score
+              Note: Correct words are +10pts and wrong words -6pts. You{" "}
+              <strong>CAN</strong> get a negative score
             </Text>
           </ModalBody>
 

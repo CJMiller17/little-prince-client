@@ -114,6 +114,9 @@ const RulesModal = ({ isOpen, onClose }) => {
             </em>{" "}
             all the compliments the conceited man expects in order to help the
             Little Prince move onto the next planet.
+            <Text fontSize="md" color="#C67E63" mt=".5rem">
+              Note: Each correct word is worth 1pt. Wrong words are not counted against you.
+            </Text>
           </ModalBody>
           <ModalFooter alignSelf="center">
             <Button

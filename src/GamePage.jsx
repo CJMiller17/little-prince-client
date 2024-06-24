@@ -3,7 +3,8 @@ import {
   Box,
   Image,
   IconButton,
-  useColorModeValue
+  useColorModeValue,
+  Tooltip
 } from "@chakra-ui/react";
 import React, { useEffect, useState, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,78 +12,97 @@ import { CgProfile } from "react-icons/cg";
 import { IoIosLogOut } from "react-icons/io";
 import { getCurrentUserProfile } from "./apis";
 import { AuthContext } from "./ContextProvider";
+import { useToast } from "@chakra-ui/react";
+
 import Rose from "./public/assets/princes_planet.png"
 import King from "./public/assets/kings_planet.png";
 import Conceited from "./public/assets/conceited_planet.png";
 import Drunkard from "./public/assets/drunkard_planet.png";
+import LockedDrunkard from "./public/assets/lockedDrunkard.png";
 import Business from "./public/assets/businessmna_planet.png";
 import Lamplighter from "./public/assets/lamplighter_planet.png";
 import Geographer from "./public/assets/geographer_planet.png";
+import LockedGeographer from "./public/assets/lockedGeographer.png"
 import Earth from "./public/assets/earth.png";
-import { useToast } from "@chakra-ui/react";
 
 
 
 const planets = [
   {
     id: 1,
-    name: "Rose",
-    image: Rose, // Why does the name appear behind the image?
+    name: "Princes Home Planet",
+    image: Rose,
+    unlockedImage: Rose,
     gameRoute: "/rose",
     locked: true,
+    requiredPoints: "2,000pts",
   },
   {
     id: 2,
-    name: "King",
-    image: King, // Why does the name appear behind the image?
+    name: "Asteroid 325",
+    image: King,
+    unlockedImage: King,
     gameRoute: "/king",
     locked: true,
+    requiredPoints: "2,500pts",
   },
   {
     id: 3,
-    name: "Conceited Man",
-    image: Conceited,
+    name: "Asteroid 326",
+    image: Conceited, // Starting Game Planet
+    unlockedImage: Conceited,
     gameRoute: "/conceited",
     locked: false,
+    requiredPoints: "",
   },
   {
     id: 4,
-    name: "Drunkard",
-    image: Drunkard,
+    name: "Asteroid 327",
+    image: LockedDrunkard, // Next Easiest Planet
+    unlockedImage: Drunkard,
     gameRoute: "/drunkard",
-    locked: false,
+    locked: true, // Used to be false
+    requiredPoints: "50pts",
   },
   {
     id: 5,
-    name: "Business Man",
+    name: "Asteroid 328",
     image: Business,
+    unlockedImage: Business,
     gameRoute: "/business",
     locked: true,
+    requiredPoints: "3,000pts",
   },
   {
     id: 6,
-    name: "Lamplighter",
+    name: "Asteroid 329",
     image: Lamplighter,
+    unlockedImage: Lamplighter,
     gameRoute: "/lamplighter",
     locked: true,
+    requiredPoints: "3,500pts",
   },
   {
     id: 7,
-    name: "Geographer",
-    image: Geographer,
+    name: "Asteroid 330",
+    image: LockedGeographer, // Last Planet with a functioning game
+    unlockedImage: Geographer,
     gameRoute: "/geographer",
-    locked: false,
+    locked: true, // Used to be false
+    requiredPoints: "150pts",
   },
   {
     id: 8,
     name: "Earth",
     image: Earth,
+    unlockedImage: Earth,
     gameRoute: "/earth",
     locked: true,
+    requiredPoints: "10,000pts",
   },
 ];
 
-const GamePage = () => {
+const GamePage = ({ updatedPlanets }) => {
     const { auth, profile } = useContext(AuthContext);
     const navigate = useNavigate()    
     const toast = useToast()
@@ -146,6 +166,7 @@ const GamePage = () => {
           backgroundSize="1000px 1000px"
           animation="move-background 70s linear infinite"
         />
+        
         <IconButton
           aria-label="view profile info"
           icon={<CgProfile />}
@@ -168,36 +189,54 @@ const GamePage = () => {
             transform: "scale(1.05)",
           }}
         />
-        {planets.map((planet, index) => (
+        {planets.map((planet, index) => (  // Mapping over planets
           <Box
             key={planet.id}
             position="absolute"
             top={`${40 + waveAmplitude * Math.sin(waveFrequency * index)}%`}
             left={`${8 + index * 12}%`}
-            transform="translate(-50%, -50%)"
+            transform="translate(-50%, -10%)"
             zIndex="3"
           >
-            <Button
-              onClick={() => handlePlanetClick(planet)}
-              variant="unstyled"
-              boxShadow="none"
-              border="none"
-              bg="none"
-              _hover={{
-                transform: "scale(1.15)",
-                boxShadow: "none", // Ensuring no shadow on hover
-                borderColor: "purple",
-              }}
-              _focus={{
-                boxShadow: "none", // Ensuring no shadow on focus
-              }}
-              _active={{
-                boxShadow: "none", // Ensuring no shadow when active (clicked)
-              }}
-              transition="transform 0.2s"
+            <Tooltip
+              label={`${planet.name} ${"\b\r"} ${planet.requiredPoints}`}
+              placement="top"
+              hasArrow
+              fontSize="xl"
+              fontWeight="bold"
+              offset={[0, -50]}
             >
-              <Image src={planet.image} alt={planet.name} boxSize="190px" />
-            </Button>
+              <Button
+                onClick={() => handlePlanetClick(planet)}
+                variant="unstyled"
+                boxShadow="none"
+                border="none"
+                bg="none"
+                _hover={{
+                  transform: "scale(1.15)",
+                  boxShadow: "none", // Ensuring no shadow on hover
+                  borderColor: "purple",
+                }}
+                _focus={{
+                  boxShadow: "none", // Ensuring no shadow on focus
+                }}
+                _active={{
+                  boxShadow: "none", // Ensuring no shadow when active (clicked)
+                }}
+                transition="transform 0.2s"
+              >
+                <Image
+                  src={planet.locked ? planet.image : planet.unlockedImage} // Handles which image to put
+                  alt={planet.name}
+                  boxSize={{
+                    base: "120px",
+                    sm: "150px",
+                    md: "170px",
+                    lg: "190px",
+                  }}
+                />
+              </Button>
+            </Tooltip>
             {index < planets.length - 1 && (
               <Box
                 position="absolute"

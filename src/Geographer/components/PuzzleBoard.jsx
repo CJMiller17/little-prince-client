@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Tile from "./Tile";
 import "../Geographer.css";
 
-const PuzzleBoard = ({ size, images }) => {
-  console.log("Puzzle Image: ", images)
+const PuzzleBoard = ({ size, images, onWin }) => {
   const [tiles, setTiles] = useState([]); // Holds the order of the tiles
   const [blankIndex, setBlankIndex] = useState(size * size - 1); // Holds index of blank tile
 
@@ -22,18 +21,24 @@ const PuzzleBoard = ({ size, images }) => {
   };
 
   const swapTiles = (index) => {
-    if (isAdjacent(index)) { // Adjacent?
+    if (isAdjacent(index)) {
+      // Adjacent?
       const newTiles = [...tiles];
-      [newTiles[index], newTiles[blankIndex]] = [ // Swap functionality
+      [newTiles[index], newTiles[blankIndex]] = [
+        // Swap functionality
         newTiles[blankIndex],
         newTiles[index],
       ];
       setTiles(newTiles);
       setBlankIndex(index);
+
+      if (checkWinCondition(newTiles)) {
+        onWin();
+      }
     }
   };
 
-console.log("IMAGES IN PUZZLEBOARD", images)
+  console.log("IMAGES IN PUZZLEBOARD", images);
 
   // Magical Math
   const isAdjacent = (index) => {
@@ -45,6 +50,16 @@ console.log("IMAGES IN PUZZLEBOARD", images)
       (row === blankRow && Math.abs(col - blankCol) === 1) || // The abs determines if it is just 1 away
       (col === blankCol && Math.abs(row - blankRow) === 1)
     );
+  };
+
+  // Check if the tiles are in reverse order
+  const checkWinCondition = (tiles) => {
+    for (let i = 0; i < tiles.length; i++) {
+      if (tiles[i] !== tiles.length - 1 - i) {
+        return false;
+      }
+    }
+    return true;
   };
 
   return (

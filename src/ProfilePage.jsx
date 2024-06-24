@@ -31,18 +31,28 @@ export default function ProfilePage({ username, name, avatar }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [totalScore, setTotalScore] = useState(0)
   const [profileImage, setProfileImage] = useState("")
+  const [updatedPlanets, setUpdatedPlanets] = useState(planets)
   const toast = useToast()
 
   console.log('BLAMMO: PROFILE: ', profile)
 
   useEffect(() => {
     if (profile?.profileData?.profileData) {
-      setTotalScore(
+      const totalScore =
         profile.profileData.profileData.score_conceited_man +
         profile.profileData.profileData.score_drunkard +
         profile.profileData.profileData.score_geographer
-      )
+      
+      setTotalScore(totalScore)
       setProfileImage(baseURL + profile.profileData.profileData.profile_image)
+
+      const newPlanets = planets.map(planet => {
+        if (totalScore >= planet.requiredPoints) {
+          return { ...planet, locked: false };
+        }
+        return planet;
+      })
+      setUpdatedPlanets(newPlanets)
     }
   }, [profile])
   

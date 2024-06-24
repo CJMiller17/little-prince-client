@@ -235,9 +235,6 @@ No one can outshine my brilliance and grandeur."`
 
     return (
       <Box className="playing-conceited" maxW="30rem" color="white">
-        <Box>
-          {/* <Text fontSize="1.5rem" mb=".7rem">{currentSentence}</Text> */}
-        </Box>
         <UnorderedList
           className="list"
           borderRadius="xl"
@@ -270,7 +267,11 @@ No one can outshine my brilliance and grandeur."`
           justifyContent="space-around"
           mb=".7rem"
         >
-          <Box textShadow="0 2px 2px #0009">Time Left:{timeLeft}</Box>
+          <Box
+            textShadow="0 2px 2px #0009"
+            color={timeLeft <= 10 ? "red" : "inherit"}
+            fontWeight={timeLeft <= 10 ? "bold" : "inherit"}
+          >Time Left:{timeLeft}</Box>
           <Text
             textShadow="0 2px 2px #0009"
           >
