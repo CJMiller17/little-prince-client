@@ -12,7 +12,7 @@ const EndGame = ({ score, onGame }) => {
     const { auth, profile } = useContext(AuthContext);
 
   const handleUpdateConceitedScore = () => {
-      console.log("handleUpdateConceitedScore called");
+      // console.log("handleUpdateConceitedScore called");
       const trueScore =
         profile.profileData.profileData.score_conceited_man + score.right;
 
@@ -21,7 +21,7 @@ const EndGame = ({ score, onGame }) => {
         accessToken: auth.accessToken,
         scoreConceited: trueScore,
       }).then((r) => {
-        console.log("updateUser successful", r);
+        // console.log("updateUser successful", r);
         profile.setGameOn(false);
       });
     };

@@ -5,8 +5,8 @@ export const baseURL = import.meta.env.VITE_BASE_URL
 
 // GET TOKEN
 export const getToken = ({ username, password }) => {
-  console.log("username: ", username);
-  console.log("password: ", password);
+  // console.log("username: ", username);
+  // console.log("password: ", password);
   return axios({
     method: 'post',
     url: `${baseURL}/token/`,
@@ -47,7 +47,7 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
       }
     )
     .then((response) => {
-      console.log("User Created: ", response);
+      // console.log("User Created: ", response);
       notify({
         //Maybe change this depending on backend response?
         title: "Account Created Successfully",
@@ -56,7 +56,7 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
       });
     })
     .catch((error) => {
-      console.log("Creation Error: ", error);
+      // console.log("Creation Error: ", error);
       notify({
         //Maybe change this depending on backend response?
         title: "Account Not Created",
@@ -71,7 +71,7 @@ export const createUser = ({ username, password, name, avatar, butterflies, elep
 // RETRIEVE
 
 export const getCurrentUserProfile = (retrievedToken) => {
-  console.log("API retrieved Token: ", retrievedToken)
+  // console.log("API retrieved Token: ", retrievedToken)
   return axios({
     method: "get",
     url: `${baseURL}/profiles/me/`,
@@ -131,10 +131,10 @@ export const updateUser = ({
       }
     )
     .then((response) => {
-      console.log("User Updated: ", response);
+      // console.log("User Updated: ", response);
     })
     .catch((error) => {
-      console.log("Update Error: ", error);
+      // console.log("Update Error: ", error);
     });
 };
 
@@ -149,10 +149,10 @@ export const deleteUser = (auth, userId) => {
       },
     })
     .then((response) => {
-      console.log("User Deleted: ", response)
+      // console.log("User Deleted: ", response)
       return response
     })
     .catch((error) => {
-      console.log("Deletion Error: ", error);
+      // console.log("Deletion Error: ", error);
     });
 };

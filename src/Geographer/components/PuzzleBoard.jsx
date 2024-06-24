@@ -38,7 +38,7 @@ const PuzzleBoard = ({ size, images, onWin }) => {
     }
   };
 
-  console.log("IMAGES IN PUZZLEBOARD", images);
+  // console.log("IMAGES IN PUZZLEBOARD", images);
 
   // Magical Math
   const isAdjacent = (index) => {

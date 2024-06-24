@@ -231,7 +231,7 @@ No one can outshine my brilliance and grandeur."`
         })
         profile.setGameOn(true);
     }
-    console.log(dataTyping)
+    // console.log(dataTyping)
 
     return (
       <Box className="playing-conceited" maxW="30rem" color="white">

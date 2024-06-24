@@ -39,9 +39,9 @@ const Login = () => {
     const insensitiveUsername = username.toLowerCase()
     getToken({ username: insensitiveUsername, password })
       .then((response) => {
-        console.log("Does this match Token Response?: ", response);
+        // console.log("Does this match Token Response?: ", response);
         auth.setAccessToken(response.data.access);
-        console.log("Auth.setAccessToken: ", auth.accessToken) //This is always from the previous render.
+        // console.log("Auth.setAccessToken: ", auth.accessToken) //This is always from the previous render.
       })
       .then(() => {
         navigate("/gamepage");
