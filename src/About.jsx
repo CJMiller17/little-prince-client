@@ -1,6 +1,10 @@
 import { IconButton, Heading, Container, Stack, ButtonGroup, Box, Text, Image} from "@chakra-ui/react";
 import { IoHome } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import Fox from "../src/public/assets/fox.png"
+import Prince from "../src/public/assets/le_prince.png";
+import Rose from "../src/public/assets/rose.png";
+
 
 
 function About() {
@@ -42,20 +46,20 @@ function About() {
                 <Image
                   // borderRadius="full"
                   boxSize="100px"
-                  src="src/public/assets/rose.png"
-                  alt="Dan Abramov"
+                  src={Rose}
+                  alt="The Rose from Le Petit Prince"
                 />
                 <Image
                   // borderRadius="full"
                   boxSize="200px"
-                  src="src/public/assets/le_prince.png"
-                  alt="Dan Abramov"
+                  src={Prince}
+                  alt="The Prince from Le Petit Prince"
                 />
                 <Image
                   // borderRadius="full"
                   boxSize="120px"
-                  src="src/public/assets/fox.png"
-                  alt="Dan Abramov"
+                  src={Fox}
+                  alt="The Fox from Le Petit Prince"
                 />
               </Stack>
               <ButtonGroup display="flex" justifyContent="center">
