@@ -100,7 +100,7 @@ export default function Multistep() {
   const handleConfirmPasswordChange = (e) => {
     const { value } = e.target;
     setConfirmPassword(value);
-    console.log("Password: ", confirmPassword)
+    // console.log("Password: ", confirmPassword)
   };
 
   const isFormValid = () => {
@@ -118,7 +118,7 @@ export default function Multistep() {
   };
 
   const handleSubmit = () => {
-    console.log("Form Data: ", formData);
+    // console.log("Form Data: ", formData);
     
     const notify = (toastAPICall) => {
       toast({

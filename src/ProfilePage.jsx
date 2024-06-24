@@ -33,7 +33,7 @@ export default function ProfilePage({ username, name, avatar }) {
   const [profileImage, setProfileImage] = useState("")
   const toast = useToast()
 
-  console.log('BLAMMO: PROFILE: ', profile)
+  // console.log('BLAMMO: PROFILE: ', profile)
 
   useEffect(() => {
     if (profile?.profileData?.profileData) {
@@ -56,7 +56,7 @@ export default function ProfilePage({ username, name, avatar }) {
   }, [profile])
   
   const handleDelete = () => {
-      console.log("Auth: ", auth, "Profile.id: ", profile)
+      // console.log("Auth: ", auth, "Profile.id: ", profile)
           deleteUser(auth, profile.profileData.profileData.id)
             .then(() => {
               localStorage.removeItem("accessToken");
@@ -72,12 +72,12 @@ export default function ProfilePage({ username, name, avatar }) {
               navigate("/");
             })
             .catch((error) => {
-              console.log("Deletion error: ", error);
+              // console.log("Deletion error: ", error);
             });
   }
 
   const handleEditUser = () => {
-    console.log("Auth: ", auth, "Profile.id: ", profile)
+    // console.log("Auth: ", auth, "Profile.id: ", profile)
           editUser(auth, avatar, name, password, profile.profileData.profileData.id)
             .then(() => {
               toast({
@@ -91,11 +91,11 @@ export default function ProfilePage({ username, name, avatar }) {
               onClose() // Closes modal
             })
             .catch((error) => {
-              console.log("Deletion error: ", error);
+              // console.log("Deletion error: ", error);
             });
   }
 
-  console.log("ProfileImage Path: ", profileImage)
+  // console.log("ProfileImage Path: ", profileImage)
 
   return profile?.profileData?.profileData ? ( // This satisfies a race condition. (?.) are looking for True, but wont throw. Just returns undefined.
     <Center py={{ base: "20" }} px={{ base: "0", sm: "8" }}>

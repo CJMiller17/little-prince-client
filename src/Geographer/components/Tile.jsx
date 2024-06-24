@@ -5,7 +5,7 @@ const Tile = ({ index, size, image, onClick }) => {
   // Boolean that determines if the tile should be blank, with no background image
   const isBlank = image === null;
 
-  console.log("IMAGE", image)
+  // console.log("IMAGE", image)
 
   return (
     <div

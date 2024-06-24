@@ -46,14 +46,14 @@ export const AuthContextProvider = ({ children }) => {
       if (auth.accessToken) {
           getCurrentUserProfile(auth.accessToken)
           .then((response) => {
-              console.log("Current User Data: ", response.data);
+              // console.log("Current User Data: ", response.data);
               profile.setProfileData((currentData) => ({
                   ...currentData,
                   profileData: response.data
                 }));
             })
             .catch((error) => {
-                console.log("Error Logging In: ", error);
+                // console.log("Error Logging In: ", error);
             });;
       }
     }, [auth.accessToken, gameOn]);
