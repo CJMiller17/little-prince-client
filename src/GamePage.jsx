@@ -27,7 +27,7 @@ import Earth from "./public/assets/earth.png";
 
 
 
-const planets = [
+const planetArray = [
   {
     id: 1,
     name: "Princes Home Planet",
@@ -61,7 +61,7 @@ const planets = [
     image: LockedDrunkard, // Next Easiest Planet
     unlockedImage: Drunkard,
     gameRoute: "/drunkard",
-    locked: true, // Used to be false
+    locked: false, // Used to be false
     requiredPoints: "50pts",
   },
   {
@@ -88,7 +88,7 @@ const planets = [
     image: LockedGeographer, // Last Planet with a functioning game
     unlockedImage: Geographer,
     gameRoute: "/geographer",
-    locked: true, // Used to be false
+    locked: false, // Used to be false
     requiredPoints: "150pts",
   },
   {
@@ -102,19 +102,93 @@ const planets = [
   },
 ];
 
-const GamePage = ({ updatedPlanets }) => {
-    const { auth, profile } = useContext(AuthContext);
-    const navigate = useNavigate()    
-    const toast = useToast()
+const GamePage = () => {
+  const { auth, profile } = useContext(AuthContext);
+  const [updatedPlanets, setUpdatedPlanets] = useState(planetArray);
+
+  const navigate = useNavigate()    
+  const toast = useToast()
 
     
-  const handleSubmit = () => {
-      navigate("/profile");
-    }
+  // const handleSubmit = () => {
+  //     navigate("/profile");
+  //   }
   
+  // const handleLogOut = () => {
+  //   localStorage.removeItem("accessToken");
+  //   auth.setAccessToken(null)
+  //   toast({
+  //     title: "Logout Successful",
+  //     description: "You've been logged out.",
+  //     status: "success",
+  //     duration: 3000,
+  //     position: "top",
+  //     isClosable: false,
+  //   });
+  //   navigate("/");
+  // };
+  
+  // const handlePlanetClick = (planet) => {
+  //   console.log("profile: ", profile)    
+  //   const vain = profile?.profileData?.profileData?.score_conceited_man
+  //   const drunk = profile?.profileData?.profileData?.score_drunkard;
+  //   const geo = profile?.profileData?.profileData?.score_geographer;
+  //   const bigScore = vain + drunk + geo
+    
+  //   const unlockedPlanets = planetArray.map((planet) => {
+  //     if (bigScore >= planet.requiredPoints) {
+  //       return { ...planet, locked: false };
+  //     }
+  //     return planet;
+  //   })
+    
+  //   setUpdatedPlanets(unlockedPlanets);
+    
+  //   const lockedPlanetToastOrNavigate = planetArray.map((planet) => {
+  //     if (planet.locked) {
+  //       toast({
+  //         title: "Planet Locked",
+  //         description: "You need more points to unlock this planet.",
+  //         status: "warning",
+  //         position: "top",
+  //         duration: 2000,
+  //       })
+  //     } else {
+  //     navigate(planet.gameRoute)
+  //     } 
+  //   })
+  // }
+  
+  useEffect(() => {
+    console.log("This is the useEffect Profile Info: ", profile)
+    const vain = profile?.profileData?.profileData?.score_conceited_man || 0;
+    const drunk = profile?.profileData?.profileData?.score_drunkard || 0;
+    const geo = profile?.profileData?.profileData?.score_geographer || 0;
+    const bigScore = vain + drunk + geo;
+    console.log('BLAMMO: BIG SCORE: ', bigScore)
+    const unlockedPlanets = planetArray.map((planet) => {
+      console.log("This is the unlockedPLanet Array: ", planet)
+      let planetScore = parseInt(planet.requiredPoints.replace("pts", "").replace(",", ""))
+      console.log('BLAMMO: PLANET SCORE: ', planetScore)
+      if (
+        bigScore >= planetScore
+      ) {
+        return { ...planet, locked: false };
+      }
+      return planet;
+    });
+
+    setUpdatedPlanets(unlockedPlanets);
+    console.log("These are the new unlocked planets are being updated: ", unlockedPlanets)
+  }, [profile]);
+
+  const handleSubmit = () => {
+    navigate("/profile");
+  };
+
   const handleLogOut = () => {
     localStorage.removeItem("accessToken");
-    auth.setAccessToken(null)
+    auth.setAccessToken(null);
     toast({
       title: "Logout Successful",
       description: "You've been logged out.",
@@ -125,8 +199,9 @@ const GamePage = ({ updatedPlanets }) => {
     });
     navigate("/");
   };
-  
+
   const handlePlanetClick = (planet) => {
+    console.log("Plane from planet click: ", planet)
     if (planet.locked) {
       toast({
         title: "Planet Locked",
@@ -136,9 +211,9 @@ const GamePage = ({ updatedPlanets }) => {
         duration: 2000,
       });
     } else {
-      navigate(planet.gameRoute)
-      } 
+      navigate(planet.gameRoute);
     }
+  };
 
   const waveAmplitude = 35
   const waveFrequency = 23.5
@@ -189,7 +264,7 @@ const GamePage = ({ updatedPlanets }) => {
             transform: "scale(1.05)",
           }}
         />
-        {planets.map((planet, index) => (  // Mapping over planets
+        {planetArray.map((planet, index) => (  // Mapping over planets
           <Box
             key={planet.id}
             position="absolute"
@@ -237,7 +312,7 @@ const GamePage = ({ updatedPlanets }) => {
                 />
               </Button>
             </Tooltip>
-            {index < planets.length - 1 && (
+            {index < planetArray.length - 1 && (
               <Box
                 position="absolute"
                 width="100px"

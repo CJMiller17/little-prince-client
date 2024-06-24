@@ -31,7 +31,6 @@ export default function ProfilePage({ username, name, avatar }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [totalScore, setTotalScore] = useState(0)
   const [profileImage, setProfileImage] = useState("")
-  const [updatedPlanets, setUpdatedPlanets] = useState(planets)
   const toast = useToast()
 
   console.log('BLAMMO: PROFILE: ', profile)
@@ -46,13 +45,13 @@ export default function ProfilePage({ username, name, avatar }) {
       setTotalScore(totalScore)
       setProfileImage(baseURL + profile.profileData.profileData.profile_image)
 
-      const newPlanets = planets.map(planet => {
-        if (totalScore >= planet.requiredPoints) {
-          return { ...planet, locked: false };
-        }
-        return planet;
-      })
-      setUpdatedPlanets(newPlanets)
+      // const newPlanets = planets.map(planet => {
+      //   if (totalScore >= planet.requiredPoints) {
+      //     return { ...planet, locked: false };
+      //   }
+      //   return planet;
+      // })
+      // setUpdatedPlanets(newPlanets)
     }
   }, [profile])
   
