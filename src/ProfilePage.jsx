@@ -18,9 +18,9 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import { ArrowBackIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteUser } from "./apis";
+import { deleteUser, updateUser } from "./apis";
 import { AuthContext } from "./ContextProvider";
 import { baseURL } from "./apis";
 import { useToast } from "@chakra-ui/react";
@@ -50,6 +50,7 @@ export default function ProfilePage({ username, name, avatar }) {
       console.log("Auth: ", auth, "Profile.id: ", profile)
           deleteUser(auth, profile.profileData.profileData.id)
             .then(() => {
+              localStorage.removeItem("accessToken");
               toast({
                 title: "Profile Deleted",
                 description: "Your profile has been deleted successfully.",
@@ -64,7 +65,26 @@ export default function ProfilePage({ username, name, avatar }) {
             .catch((error) => {
               console.log("Deletion error: ", error);
             });
-      }
+  }
+
+  const handleEditUser = () => {
+    console.log("Auth: ", auth, "Profile.id: ", profile)
+          editUser(auth, avatar, name, password, profile.profileData.profileData.id)
+            .then(() => {
+              toast({
+                title: "Profile Updated",
+                description: "Your profile has been updated successfully.",
+                status: "success",
+                duration: 3000,
+                position: "top",
+                isClosable: false,
+              });
+              onClose() // Closes modal
+            })
+            .catch((error) => {
+              console.log("Deletion error: ", error);
+            });
+  }
 
   console.log("ProfileImage Path: ", profileImage)
 
@@ -186,19 +206,20 @@ export default function ProfilePage({ username, name, avatar }) {
             >
               Back
             </IconButton>
-            <IconButton
+            {/* <IconButton
               maxWidth="1.5rem"
               color="#3C6286"
               variant="outline"
               textDecoration="none"
               fontSize="lg"
+              onClick={handleEditUser}
               _hover={{ bgColor: "#B8D4E6" }}
               _active={{ color: "#FBD154" }}
               boxShadow="0 10px 10px #0003"
               icon={<EditIcon />}
             >
               Update
-            </IconButton>
+            </IconButton> */}
             <IconButton
               maxWidth="1.5rem"
               bg={"#A3646D"}
@@ -262,3 +283,173 @@ function DeleteProfileAlert({ isOpen, onClose, handleDelete }) {
     </>
   );
 }
+
+
+// function EditUserModal({profile, auth }) {
+//   const { isOpen, onOpen, onClose } = useDisclosure();
+
+//   const initialRef = useRef(null);
+//   const finalRef = useRef(null);
+//   const [editFormData, setEditFormData] = useState({
+//     username: profile?.profileData?.profileData?.account_name?.username || "",
+//     name: profile?.profileData?.profileData?.name || "",
+//     password: "",
+//     avatar: null,
+//   })
+//   const [imageUploaded, setImageUploaded] = useState(false)
+//   const fileInputRef = useRef(null)
+//   const toast = useToast()
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     setEditFormData((prevFormData) => ({
+//       ...prevFormData,
+//       [name]: value,
+//     }));
+//   };
+// }
+  
+//   const handleFileChange = (e) => {
+//     setFormData((prevFormData) => ({
+//       ...prevFormData,
+//       avatar: e.target.files[0],
+//     }));
+//     setImageUploaded(true);
+//   };
+
+//   const handleUpload = () => {
+//     fileInputRef.current.click();
+//   };
+
+  // const handleUpdateUser = () => {
+  //   const { username, password, name, avatar } = formData;
+  //   updateUser({
+  //     accessToken: auth.accessToken,
+  //     profilePrimaryKey: profile.profileData.profileData.id,
+  //     username,
+  //     password,
+  //     name,
+  //     avatar,
+  //   })
+  //     .then(() => {
+  //       toast({
+  //         title: "Profile Updated",
+  //         description: "Your profile has been updated successfully.",
+  //         status: "success",
+  //         duration: 3000,
+  //         position: "top",
+  //         isClosable: false,
+  //       });
+  //       onClose(); // Closes modal
+  //     })
+  //     .catch((error) => {
+  //       console.log("Update error: ", error);
+  //       toast({
+  //         title: "Profile Update Failed",
+  //         description: "There was an error updating your profile. Please try again.",
+  //         status: "error",
+  //         duration: 3000,
+  //         position: "top",
+  //         isClosable: false,
+  //       });
+  //     });
+  // };
+
+  // return (
+  //   <>
+  //     <Modal
+  //       initialFocusRef={initialRef}
+  //       finalFocusRef={finalRef}
+  //       isOpen={isOpen}
+  //       onClose={onClose}
+  //     >
+  //       <ModalOverlay />
+  //       <ModalContent>
+  //         <ModalHeader>Edit your account</ModalHeader>
+  //         <ModalCloseButton />
+  //         <ModalBody pb={6}>
+  //           <FormControl>
+  //             <FormLabel>Name</FormLabel>
+  //             <Input
+  //               ref={initialRef}
+  //               placeholder="Name"
+  //               name="name"
+  //               value={formData.name}
+  //               onChange={handleInputChange}
+  //             />
+  //           </FormControl>
+
+  //           <FormControl mt={4}>
+  //             <FormLabel>Username</FormLabel>
+  //             <Input
+  //               placeholder="Username"
+  //               name="username"
+  //               value={formData.username}
+  //               onChange={handleInputChange}
+  //             />
+  //           </FormControl>
+
+  //           <FormControl mt={4}>
+  //             <FormLabel>Password</FormLabel>
+  //             <Input     // CHANGE FONT TYPE
+  //               placeholder="Password"
+  //               name="password"
+  //               value={formData.}
+  //               onChange={handleInputChange}
+  //             />
+  //           </FormControl>
+
+  //           <FormControl mt={4}>
+  //             <FormLabel>Confirm Password</FormLabel>
+  //             <Input placeholder="Last name" />
+  //           </FormControl>
+  //         </ModalBody>
+
+  //         <FormControl mt={4}>
+  //             <FormLabel>Confirm Password</FormLabel>
+  //           <IconButton
+  //             aria-label="upload profile image"
+  //             icon={<CgProfile />}
+  //             isRound
+  //             marginLeft="2"
+  //             onClick={handleUpload}
+  //           />
+  //           <Input
+  //             ref={fileInputRef}
+  //             type="file"
+  //             accept=".png, .jpg, .jpeg"
+  //             name="avatar"
+  //             onChange={(e) => {
+  //               handleInputChange(e);
+  //               setImageUploaded(true);
+  //             }}
+  //             display="none"
+  //           />
+  //           {imageUploaded && formData.avatar && (
+  //             <Text fontSize="xs" color="green.500" mt="1">
+  //               {formData.avatar.name} Loaded Successfully
+  //             </Text>
+  //           )}
+  //           {!imageUploaded && (
+  //             <FormHelperText
+  //               fontSize="xs"
+  //               as="sup"
+  //               marginTop="1"
+  //               marginLeft="4"
+  //             >
+  //               Upload a profile image
+  //             </FormHelperText>
+  //           )}
+  //           </FormControl>
+  //         </ModalBody>
+
+  //         <ModalFooter>
+  //           <Button colorScheme="blue" mr={3}>
+  //             Save
+  //           </Button>
+  //           <Button onClick={onClose}>Cancel</Button>
+  //         </ModalFooter>
+  //       </ModalContent>
+  //     </Modal>
+  //   </>
+  // );

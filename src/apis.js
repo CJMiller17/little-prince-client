@@ -87,6 +87,8 @@ export const getCurrentUserProfile = (retrievedToken) => {
 export const updateUser = ({
   accessToken,
   profilePrimaryKey,
+  username,
+  password,
   name,
   avatar,
   butterflies,
@@ -105,6 +107,8 @@ export const updateUser = ({
     .put(
       `${baseURL}/profiles/${profilePrimaryKey}/update/`,
       {
+        username,
+        password,
         name: name,
         profile_image: avatar,
         butterflies,

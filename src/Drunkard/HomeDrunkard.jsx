@@ -85,6 +85,15 @@ const RulesModal = ({ isOpen, onClose }) => {
           <ModalHeader fontSize="3xl" textAlign="center" color="#3C6286">
             Drunkard Gameplay Rules
           </ModalHeader>
+          <ModalHeader
+            color="#C67E63"
+            fontSize="xl"
+            textAlign="center"
+            mt="-2rem"
+            textShadow="0 5px 5px #0003"
+          >
+            Word Unscramble Game
+          </ModalHeader>
           <ModalBody color="#3C6286">
             The Little Prince landed on a planet where the only inhabitant is a
             drunkard who slurs his words. The Little Prince is having a hard
@@ -94,6 +103,9 @@ const RulesModal = ({ isOpen, onClose }) => {
             </em>{" "}
             his words in order to help the Little Prince move onto the next
             planet.
+            <Text fontSize="md" color="#C67E63" mt=".5rem">
+              Note: You CAN get a negative score
+            </Text>
           </ModalBody>
 
           <ModalFooter alignSelf="center">

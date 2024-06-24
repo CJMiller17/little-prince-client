@@ -42,6 +42,9 @@ function ConceitedApp() {
     
 
   const handleChangeStatus = (status) => {
+    if (status === "playGame") {
+      setTimeLeft(60);
+    }
     setStatusGame(status);
   };
 

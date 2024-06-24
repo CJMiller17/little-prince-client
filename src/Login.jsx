@@ -61,7 +61,7 @@ const Login = () => {
   
 
   return (
-    <Container maxW="2xl" py={{ base: "20" }} px={{ base: "0", sm: "8" }}>
+    <Container maxW="xl" py={{ base: "20" }} px={{ base: "0", sm: "8" }}>
       <Stack
         spacing="1"
         py={{ base: "0", sm: "8" }}
@@ -132,7 +132,7 @@ const Login = () => {
               >
                 Remember me
               </Checkbox>
-              <Button
+              {/* <Button
                 variant="link"
                 fontSize=".6rem"
                 bg="#3C6286"
@@ -142,7 +142,7 @@ const Login = () => {
                 letterSpacing=".01rem"
               >
                 Forgot password?
-              </Button>
+              </Button> */}
             </Flex>
             <ButtonGroup mt="1rem">
               <Button variant="solid" onClick={submit}>

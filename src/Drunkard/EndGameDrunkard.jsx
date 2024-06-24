@@ -17,16 +17,9 @@ import { AuthContext } from "../ContextProvider";
 const EndGame = ({ score, onGame }) => {
 
   const { auth, profile } = useContext(AuthContext);
-  console.log("This script is being run", auth)
-  console.log("Profile Again: ", profile);
-  console.log("Primary Key: ", profile.profileData.profileData.account_name.id,)
   
-
   const handleUpdateDrunkardScore = () => {
-    console.log('Tot Score: ', score.total)
     const trueScore = profile.profileData.profileData.score_drunkard + score.total
-    console.log("Prev Score: ", profile.profileData.profileData.score_drunkard);
-    console.log("TS: ", trueScore)
 
     updateUser({
       profilePrimaryKey: profile.profileData.profileData.id,
@@ -35,17 +28,9 @@ const EndGame = ({ score, onGame }) => {
     })
       .then(
         r => {
-          console.log('in the updateUser of Drunk Sam: ', trueScore)
           profile.setGameOn(false)
         }
     )
-    //   .then(
-    //   profile.setProfileData({
-    //     ...profile.profileData.profileData,
-    //     score_drunkard: trueScore
-    //   }
-    //   )
-    // );
   }
 
   useEffect(() => {

@@ -95,11 +95,25 @@ const RulesModal = ({ isOpen, onClose }) => {
           <ModalHeader fontSize="3xl" textAlign="center" color="#3C6286">
             Conceited Man Gameplay Rules
           </ModalHeader>
+          <ModalHeader
+            color="#C67E63"
+            fontSize="xl"
+            textAlign="center"
+            mt="-2rem"
+            textShadow="0 5px 5px #0003"
+          >
+            Speed Typing Game
+          </ModalHeader>
           <ModalBody color="#3C6286">
-            The Little Prince landed on a planet where the only inhabitant is a
-            <em>VERY</em> conceited man who always needs to be complimented. The Little Prince is having a hard
-            time complimenting him quick enough. It is up to you to <em><strong>TYPE FAST</strong></em> all the
-            compliments the conceited man expects in order to help the Little Prince move onto the next planet.
+            The Little Prince landed on a planet where the only inhabitant is a{" "}
+            <em>VERY</em> conceited man who always needs to be complimented. The
+            Little Prince is having a hard time complimenting him quick enough.
+            It is up to you to{" "}
+            <em>
+              <strong>QUICKLY TYPE</strong>
+            </em>{" "}
+            all the compliments the conceited man expects in order to help the
+            Little Prince move onto the next planet.
           </ModalBody>
           <ModalFooter alignSelf="center">
             <Button
