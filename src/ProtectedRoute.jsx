@@ -19,17 +19,22 @@ const ProtectedRoute = ({ children }) => {
     }
   }, [auth.accessToken]);
 
-  if (!isAuthenticated) {
-    toast({
-      title: "Login Required",
-      description: "You have to login to go to that page.",
-      status: "warning",
-      duration: 3000,
-      isClosable: false,
-    });
-    navigate("/login")
-  }
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      toast({
+        title: "Login Required",
+        description: "You have to login to go to that page.",
+        status: "warning",
+        duration: 3000,
+        isClosable: false,
+      });
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate, toast]);
 
+  if (isAuthenticated === null) {
+    return null
+  }
   return children;
 };
 

@@ -2,9 +2,34 @@ import { Box, Button, Heading, SimpleGrid, Text, IconButton } from "@chakra-ui/r
 import "./Conceited.css";
 import { Link } from "react-router-dom";
 import { IoHome } from "react-icons/io5";
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "../ContextProvider";
+import { updateUser } from "../apis"
 
 
-const EndGame = ({ score, onGame}) => {
+const EndGame = ({ score, onGame }) => {
+  
+    const { auth, profile } = useContext(AuthContext);
+
+  const handleUpdateConceitedScore = () => {
+      console.log("handleUpdateConceitedScore called");
+      const trueScore =
+        profile.profileData.profileData.score_conceited_man + score.right;
+
+      updateUser({
+        profilePrimaryKey: profile.profileData.profileData.id,
+        accessToken: auth.accessToken,
+        scoreConceited: trueScore,
+      }).then((r) => {
+        console.log("updateUser successful", r);
+        profile.setGameOn(false);
+      });
+    };
+
+    useEffect(() => {
+      handleUpdateConceitedScore();
+    }, []);
+
     return (
       <Box
         className="endGame"

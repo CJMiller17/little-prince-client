@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 function GeographerApp() {
   const [statusGame, setStatusGame] = useState(null);
   const [score, setScore] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(60); //For clock purposes
+  const [timeLeft, setTimeLeft] = useState(300); //For clock purposes
 
   useEffect(() => {
     if (statusGame === "playGame") {
@@ -14,11 +14,26 @@ function GeographerApp() {
         right: 0,
         wrong: 0,
       });
-      
+
       const timeOutGame = setTimeout(() => {
         setStatusGame("endGame");
       }, 300000);
-      return () => clearTimeout(timeOutGame);
+      // return () => clearTimeout(timeOutGame);
+
+      const intervalTimer = setInterval(() => {
+        setTimeLeft((prevTimeLeft) => {
+          if (prevTimeLeft <= 1) {
+            clearInterval(intervalTimer);
+            return 0;
+          }
+          return prevTimeLeft - 1;
+        });
+      }, 1000); // Decrementing clock feature by 1 second every second
+
+      return () => {
+        clearTimeout(timeOutGame);
+        clearInterval(intervalTimer);
+      };
     }
   }, [statusGame]);
 
@@ -44,7 +59,13 @@ function GeographerApp() {
 
   switch (statusGame) {
     case "playGame":
-      layout = <PlayGame onChangeScore={handleChangeScore} />;
+      layout = (
+        <PlayGame
+          onChangeScore={handleChangeScore}
+          score={score}
+          timeLeft={timeLeft}
+        />
+      );
       break;
     case "endGame":
       layout = <EndGame score={score} onGame={handleChangeStatus} />;

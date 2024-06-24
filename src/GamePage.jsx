@@ -19,13 +19,6 @@ import Business from "./public/assets/businessmna_planet.png";
 import Lamplighter from "./public/assets/lamplighter_planet.png";
 import Geographer from "./public/assets/geographer_planet.png";
 import Earth from "./public/assets/earth.png";
-
-
-
-
-
-
-
 import { useToast } from "@chakra-ui/react";
 
 
@@ -99,7 +92,17 @@ const GamePage = () => {
       navigate("/profile");
     }
   
-  const handleLogout = () => {
+  const handleLogOut = () => {
+    localStorage.removeItem("accessToken");
+    auth.setAccessToken(null)
+    toast({
+      title: "Logout Successful",
+      description: "You've been logged out.",
+      status: "success",
+      duration: 3000,
+      position: "top",
+      isClosable: false,
+    });
     navigate("/");
   };
   
@@ -157,7 +160,7 @@ const GamePage = () => {
         <IconButton
           aria-label="logout button"
           icon={<IoIosLogOut />}
-          onClick={handleLogout}
+          onClick={handleLogOut}
           zIndex="3"
           margin=".5rem"
           maxW="1.5rem"

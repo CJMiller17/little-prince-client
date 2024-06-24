@@ -17,6 +17,7 @@ import {
 import { IoHome } from "react-icons/io5";
 import "./Geographer.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Home = ({ onGame }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -77,24 +78,39 @@ const Home = ({ onGame }) => {
 export default Home;
 
 const RulesModal = ({ isOpen, onClose }) => {
+  const [scrollBehavior, setScrollBehavior] = useState("inside");
+
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={scrollBehavior}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontSize="3xl" textAlign="center" color="#3C6286">
             Geographer Gameplay Rules
           </ModalHeader>
+          <ModalHeader
+            color="#C67E63"
+            fontSize="xl"
+            textAlign="center"
+            mt="-2rem"
+            textShadow="0 5px 5px #0003"
+          >
+            Slider Puzzle Game
+          </ModalHeader>
           <ModalBody color="#3C6286">
             The Little Prince landed on a planet where the only inhabitant is a
-            geographer who has never traveled or explored. The
-            Little Prince is having a hard time piecing together a map to show the geographer his own planet.
-            It is up to you to{" "}
+            geographer who has never traveled or explored. The Little Prince is
+            having a hard time piecing together a map to show the geographer his
+            own planet. It is up to you to{" "}
             <em>
               <strong>SLIDE</strong>
             </em>{" "}
-            all the map pieces together correctly in order to help the
-            Little Prince move onto the next planet.
+            all the map pieces together correctly in order to help the Little
+            Prince move onto the next planet.
+            <Text fontSize="md" color="#C67E63" mt=".5rem">
+              Note: You can choose a harder difficulty, but the timer doesn't stop. Choose wisely and choose quickly!
+              The larger the puzzle, the larger the reward!
+            </Text>
           </ModalBody>
           <ModalFooter alignSelf="center">
             <Button

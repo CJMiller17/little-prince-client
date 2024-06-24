@@ -127,9 +127,6 @@
 
 // export default PlayGame;
 
-
-
-
 import {
     Button,
     Box,
@@ -140,38 +137,72 @@ import {
     Text,
     Input,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../ContextProvider";
 import "./Conceited.css";
 
 const PlayGame = ({ onChangeScore, score, timeLeft }) => {
-    const [defaultData] = useState("The conceited man stood proudly on his tiny planet, his nose held high in the air. 'I am the most handsome, the most intelligent, and the most admired in all the universe,' he proclaimed, not noticing that he was the only inhabitant of his world. 'Applaud me!' he would demand")
-    const [dataTyping, setDataTyping] = useState([])
+  const [defaultData] = useState(
+    `"I am the most handsome, the most intelligent, and the most admired in all the universe.
+Applaud me! I am magnificent.
+I am the most handsome person in the entire universe.
+No one can match my brilliance and charm.
+Everyone should admire me and my incredible intellect.
+I am the most important person on my planet.
+My presence alone makes this world a better place.
+I deserve constant applause for my greatness.
+There is no one as talented and gifted as I am.
+Every word I say is a pearl of wisdom.
+People should be grateful to witness my magnificence.
+I am the epitome of perfection.
+All should bow down to my superior intelligence.
+My beauty is unparalleled in the entire galaxy.
+I am the center of the universe, and everyone revolves around me.
+My opinions are always correct and should be revered.
+There is no task too great for someone as exceptional as me.
+I am the ultimate example of what it means to be extraordinary.
+The world is lucky to have someone as remarkable as me.
+My talents are boundless, and everyone should acknowledge them.
+I am the pinnacle of success and achievement.
+No one can outshine my brilliance and grandeur."`
+  );
+  const [dataTyping, setDataTyping] = useState([])
+  const [currentSentence, setCurrentSentence] = useState("")
+  const { profile } = useContext(AuthContext);
+  
     const [textTyping, setTextTyping] = useState({
         value: "",
-        position: 0
+        position: 0,
+        wordIndex: 0
     })
 
     useEffect(() => {
-        const addWord = (quantity = 20) => {
-            const arrayDefaultDB = defaultData.split(" ")
-            const dataTypingTest = []
-            for (let index = 0; index < quantity; index++) {
-                const position = Math.floor(Math.random() * arrayDefaultDB.length)
-                dataTypingTest.push({
-                    value: arrayDefaultDB[position],
-                    status: null
-                })
-            }
-            setDataTyping(dataTypingTest)
-        }
-        if (dataTyping.length === 0 || textTyping.position >= dataTyping.length) {
-            addWord()
-            setTextTyping({ ...textTyping, position: 0})
-        }
-    }, [textTyping.position])
+        const addSentence = () => {
+        const arrayDefaultDB = defaultData.split(".")
+        const position = Math.floor(Math.random() * arrayDefaultDB.length)
+        const sentence = arrayDefaultDB[position].trim()
+        setCurrentSentence(sentence)
+        setDataTyping(sentence.split(" ").map(word => ({ value: word.toLowerCase(), status: null })))
+      }
+
+
+            // for (let index = 0; index < quantity; index++) {
+            //     const position = Math.floor(Math.random() * arrayDefaultDB.length)
+            //     dataTypingTest.push({
+            //         value: arrayDefaultDB[position].toLowerCase(),
+            //         status: null
+            //     })
+            // }
+            // setDataTyping(dataTypingTest)
+        
+      if (dataTyping.length === 0 || textTyping.wordIndex >= dataTyping.length) {
+          addSentence()
+          setTextTyping({ ...textTyping, position: 0, wordIndex: 0 })
+      }
+    }, [textTyping.wordIndex])
     
     const handleChangeTyping = e => {
-        const valueInput = e.target.value
+        const valueInput = e.target.value.toLowerCase()
         if (!valueInput.includes(" ")) {
             setTextTyping({
                 ...textTyping,
@@ -183,25 +214,30 @@ const PlayGame = ({ onChangeScore, score, timeLeft }) => {
     }
 
     const checkResult = () => {
-        const dataCheck = dataTyping
-        const wordCheck = dataCheck[textTyping.position].value
+        const dataCheck = [...dataTyping]
+        const wordCheck = dataCheck[textTyping.wordIndex].value
         if (textTyping.value === wordCheck) {
-            dataCheck[textTyping.position].status = true
+            dataCheck[textTyping.wordIndex].status = true
             onChangeScore("right")
         } else {
-            dataCheck[textTyping.position].status = false
+            dataCheck[textTyping.wordIndex].status = false
             onChangeScore("wrong");
         }
         setDataTyping(dataCheck)
         setTextTyping({
             value: "",
-            position: textTyping.position + 1
+            position: textTyping.position + 1,
+            wordIndex: textTyping.wordIndex + 1
         })
+        profile.setGameOn(true);
     }
     console.log(dataTyping)
 
     return (
       <Box className="playing-conceited" maxW="30rem" color="white">
+        <Box>
+          {/* <Text fontSize="1.5rem" mb=".7rem">{currentSentence}</Text> */}
+        </Box>
         <UnorderedList
           className="list"
           borderRadius="xl"
