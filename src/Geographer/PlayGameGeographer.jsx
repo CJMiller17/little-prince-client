@@ -64,21 +64,6 @@ const PlayGameGeographer = ({ score, timeLeft}) => {
   const [points, setPoints] = useState("100");
 
 
-  // const checkIfSolved = () => {
-  //   const expectedOrder = Array.from(
-  //     { length: size * size },
-  //     (_, index) => index + 1
-  //   );
-  //   const currentOrder = images.map((image) =>
-  //     parseInt(image.split("/").pop().split(".")[0])
-  //   );
-  //   if (JSON.stringify(currentOrder) === JSON.stringify(expectedOrder)) {
-  //     setIsSolved(true);
-  //   } else {
-  //     setIsSolved(false);
-  //   }
-  // };
-
   const changeDifficulty = (newSize) => {
     setSize(newSize);
 
@@ -170,14 +155,13 @@ const PlayGameGeographer = ({ score, timeLeft}) => {
     changeDifficulty(size);
   }, []); // Size as a dependency??
 
-  // useEffect(() => {
-  //   checkIfSolved();
-  // }, [images]);
+  
+  const handleWin = () => {
+    setIsSolved(true);
+    alert("Congratulations! You have solved the puzzle.");
+  };
 
-  // const changeImage = () => {
-  //   // Future added change images
-  // };
-
+  
   const formattedTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -243,11 +227,16 @@ const PlayGameGeographer = ({ score, timeLeft}) => {
           </Text>
           <Text textShadow="0 2px 2px #0009">{points} points</Text>
         </Heading>
-        <Box textShadow="0 2px 2px #0009" alignSelf="center">
+        <Box
+          textShadow="0 2px 2px #0009"
+          alignSelf="center"
+          color={timeLeft <= 30 ? "red" : "inherit"}
+          fontWeight={timeLeft <= 30 ? "bold" : "inherit"}
+        >
           Time Left:{formattedTime(timeLeft)}
         </Box>
       </SimpleGrid>
-      <PuzzleBoard size={size} images={images} />
+      <PuzzleBoard size={size} images={images} onWin={handleWin} />
     </Box>
   );
 };

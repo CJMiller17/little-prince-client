@@ -105,11 +105,11 @@ export default function Multistep() {
 
   const isFormValid = () => {
     return (
-      formData.sound !== "" &&
+      // formData.sound !== "" &&
       formData.butterflies !== "" &&
       formData.elephants !== "" &&
       formData.color !== "" &&
-      formData.bestFriend !== "" &&
+      // formData.bestFriend !== "" &&
       formData.name !== "" &&
       formData.username !== "" &&
       formData.password !== "" &&
@@ -381,14 +381,14 @@ const Form2 = ({formData, handleInputChange}) => {
             >
               How many elephants can fit on your planet?
             </FormLabel>
-            <NumberInput maxW="4rem" alignSelf="center">
-              <NumberInputField
+            {/* <NumberInput maxW="4rem" alignSelf="center"> */}
+              <Input
                 id="elephants"
                 name="elephants"
-                min={0}
+                // min={0}
                 color="#82B0E1"
                 shadow="md"
-                onChange={handleInputChange}
+                onChange={e => handleInputChange(e)}
                 value={formData.elephants}
                 placeholder="Ex. 42"
                 textAlign="start"
@@ -406,7 +406,7 @@ const Form2 = ({formData, handleInputChange}) => {
                   },
                 }}
               />
-            </NumberInput>
+            {/* </NumberInput> */}
           </SimpleGrid>
         </FormControl>
       </SimpleGrid>

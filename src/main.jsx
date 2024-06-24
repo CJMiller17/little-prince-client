@@ -175,7 +175,7 @@ const router = createBrowserRouter([
         path: "/gamepage",
         element: (
           <ProtectedRoute>
-            <GamePage />
+            <GamePage/>
           </ProtectedRoute>
         ),
       },
