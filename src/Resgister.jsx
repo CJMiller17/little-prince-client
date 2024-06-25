@@ -83,17 +83,18 @@ export default function Multistep() {
       return
     }
 
-    setFormData({
-      ...formData,
-      [name]: parsedValue,
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "avatar" ? files[0] : parsedValue,
+    }));
     
     if (name === "avatar") {
-      setFormData((prev) => ({ ...prev, avatar: files[0] }))
+      // setFormData((prev) => ({ ...prev, avatar: files[0] }))
       setImageUploaded(true)
-    } else {
-      setFormData((prev) => ({...prev, [name]: value}))
     }
+    // } else {
+    //   setFormData((prev) => ({...prev, [name]: value}))
+    // }
     
   };
 
@@ -381,11 +382,11 @@ const Form2 = ({formData, handleInputChange}) => {
             >
               How many elephants can fit on your planet?
             </FormLabel>
-            {/* <NumberInput maxW="4rem" alignSelf="center"> */}
-              <Input
+            <NumberInput maxW="4rem" alignSelf="center">
+              <NumberInputField
                 id="elephants"
                 name="elephants"
-                // min={0}
+                min={0}
                 color="#82B0E1"
                 shadow="md"
                 onChange={e => handleInputChange(e)}
@@ -406,7 +407,7 @@ const Form2 = ({formData, handleInputChange}) => {
                   },
                 }}
               />
-            {/* </NumberInput> */}
+            </NumberInput>
           </SimpleGrid>
         </FormControl>
       </SimpleGrid>
