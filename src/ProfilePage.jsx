@@ -29,7 +29,7 @@ export default function ProfilePage({ username, name, avatar }) {
   const { auth, profile } = useContext(AuthContext);
   const navigate = useNavigate()
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [totalScore, setTotalScore] = useState(0)
+  const [totalScore, setTotalScore] = useState(0) 
   const [profileImage, setProfileImage] = useState("")
   const toast = useToast()
 
